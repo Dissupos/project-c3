@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postInstall": "webpack -w --progress",
-    "server": "webpack-dev-server"
+    "postinstall": "webpack -w --progress",
+    "production": "webpack -p",
+    "start": "webpack-dev-server"
   },
   "author": "Vlad Bulyukhin <vlad.bulyukhin@yahoo.com>",
   "devDependencies": {

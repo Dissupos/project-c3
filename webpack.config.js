@@ -14,25 +14,7 @@ module.exports = {
     ],
     output: {
         path: __dirname + '/src/main/java/webapp',
-        filename: 'bundle.js'
-    },
-    devtool: 'source-map',
-    output: {
-        path: '/src/main/java/webapp',
-        filename: './bundle.js',
-        devtoolModuleFilenameTemplate: function(infoObject) {
-            var newPath;
-            newPath = infoObject.resourcePath.replace('./', 'source-maps:///').replace('webpack', 'source-maps');
-
-            if(newPath.indexOf('s$') > -1){
-                newPath = infoObject.resourcePath.replace('./', 'duplicated:///') + '?' + infoObject.hash;
-            }
-
-            return newPath;
-        },
-        devtoolFallbackModuleFilenameTemplate: function(infoObject) {
-            return infoObject.resourcePath.replace('./', 'duplicated:///') + '?' + infoObject.hash;
-        }
+        filename: "bundle.js"
     },
     module: {
         preLoaders: [
@@ -63,6 +45,6 @@ module.exports = {
                 loader: "file-loader"
             }
         ],
-        plugins: [HtmlWebpackPluginConfig]
-    }
+    },
+    plugins: [HtmlWebpackPluginConfig]
 };
