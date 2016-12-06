@@ -10,7 +10,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
     entry: [
-        './client/index.js'
+        './client/index.jsx'
     ],
     output: {
         path: __dirname + '/src/main/java/webapp',
@@ -41,8 +41,12 @@ module.exports = {
             }, {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "url-loader?limit=10000&minetype=application/font-woff"
-            }, { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            }, {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "file-loader"
+            }, {
+                test: /\.[ot]tf$/,
+                loader: 'url?limit=65000&mimetype=application/octet-stream&name=public/fonts/[name].[ext]'
             }
         ],
     },
