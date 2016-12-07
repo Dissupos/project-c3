@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -19,12 +17,8 @@ public class WebAuthenticationAdapter extends GlobalAuthenticationConfigurerAdap
 
     @Bean
     UserDetailsService getUserDetailService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return new org.springframework.security.core.userdetails.User(username, "admin",
+        return (String username) ->
+                new org.springframework.security.core.userdetails.User(username, "password",
                         AuthorityUtils.NO_AUTHORITIES);
-            }
-        };
     }
 }

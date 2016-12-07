@@ -22,10 +22,8 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -36,16 +34,6 @@ import java.util.Map;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 
-    public ErrorAttributes errorAttributes() {
-        return new DefaultErrorAttributes() {
-            @Override
-            public Map<String, Object> getErrorAttributes(RequestAttributes requestAttributes, boolean includeStackTrace) {
-                Map<String, Object> errorAttributes = super.getErrorAttributes(requestAttributes, includeStackTrace);
-                return errorAttributes;
-            }
-
-        };
-    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -76,55 +64,49 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(false)
                 .and().csrf().disable();
-//                csrfTokenRepository(csrfTokenRepository()).and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
     }
 
     private AuthenticationSuccessHandler loginSuccessHandler() {
-        return new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(200, null, "OK"));
-                httpServletResponse.setStatus(200);
-            }
+        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
+            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(200, null, "OK"));
+            httpServletResponse.setStatus(200);
         };
     }
 
     private LogoutSuccessHandler logoutSuccessHandler() {
-        return new LogoutSuccessHandler() {
-            @Override
-            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(200, null, "OK"));
-                httpServletResponse.setStatus(200);
-            }
+        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
+            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(200, null, "OK"));
+            httpServletResponse.setStatus(200);
         };
     }
 
     private AuthenticationFailureHandler loginFailureHandler() {
-        return new AuthenticationFailureHandler() {
-            @Override
-            public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(401, "Authentication failure", "Bad Credentials"));
-                httpServletResponse.setStatus(401);
-            }
+        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) -> {
+            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(401, "Authentication failure", "Bad Credentials"));
+            httpServletResponse.setStatus(401);
         };
     }
 
     private AccessDeniedHandler accessDeniedHandler() {
-        return new AccessDeniedHandler() {
-            @Override
-            public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-                httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(403, "Access denied", "You don't have permissions"));
-                httpServletResponse.setStatus(403);
-            }
+        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) -> {
+            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(403, "Access denied", "You don't have permissions"));
+            httpServletResponse.setStatus(403);
         };
     }
 
     private AuthenticationEntryPoint authenticationEntryPoint() {
-        return new AuthenticationEntryPoint() {
+        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) -> {
+            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(401, "Not authenticated", "Log in please"));
+            httpServletResponse.setStatus(401);
+        };
+    }
+
+    private ErrorAttributes errorAttributes() {
+        return new DefaultErrorAttributes() {
             @Override
-            public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(401, "Not authenticated", "Log in please"));
-                httpServletResponse.setStatus(401);
+            public Map<String, Object> getErrorAttributes(RequestAttributes requestAttributes, boolean includeStackTrace) {
+                Map<String, Object> errorAttributes = super.getErrorAttributes(requestAttributes, includeStackTrace);
+                return errorAttributes;
             }
         };
     }
@@ -132,7 +114,7 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
     private String buildErrorAttributesAsJSON(Integer status, String error, String message) throws JsonProcessingException {
         Map<String, Object> ret = errorAttributes().getErrorAttributes(RequestContextHolder.getRequestAttributes(), false);
         ret.put("status", status);
-        if(error != null) {
+        if (error != null) {
             ret.put("error", error);
         } else {
             ret.remove("error");
