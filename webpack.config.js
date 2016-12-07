@@ -33,9 +33,8 @@ module.exports = {
                 test: /\.less/,
                 loader: 'style-loader!css-loader!less-loader'
             }, {
-                test: /\.(png|jpe?g|gif)$/i,
-                loaders: 'file-loader',
-                include: '/client/img/'
+                test: /\.(png|jpe?g|gif)$/,
+                loader: 'file-loader?name=/img/[name].[ext]'
             }, {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,

@@ -4,6 +4,9 @@ import C3Header from './C3Header/C3Header.jsx';
 
 import '../../node_modules/bootstrap/less/bootstrap.less';
 import '../less/project-c3.less';
+import '../img/logo.png';
+import '../img/logo-full.png';
+import '../img/rain.png';
 
 export default class Main extends React.Component {
     render() {
