@@ -1,5 +1,7 @@
 package cz.project.c3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @SpringBootApplication
 public class ProjectC3Application {
+
+    // logger
+    private static final Logger log = LoggerFactory.getLogger(ProjectC3Application.class);
+
     public static void main(String[] args) {
         SpringApplication.run(ProjectC3Application.class, args);
     }
@@ -22,9 +28,9 @@ public class ProjectC3Application {
     @Bean
     CommandLineRunner init() {
         return new CommandLineRunner() {
-
             @Override
             public void run(String... args) throws Exception {
+                log.debug("Start init application");
                 // TODO
             }
 
