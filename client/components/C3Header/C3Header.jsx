@@ -1,5 +1,6 @@
 import React from 'react';
 import TopMenu from './TopMenu.jsx';
+import Logo from './Logo.jsx';
 
 export default class C3Header extends React.Component {
     constructor() {
@@ -8,28 +9,29 @@ export default class C3Header extends React.Component {
         this.state = {
             menuItems: [
                 {
-                    link: 'about',
-                    name: 'About'
-                },
-                {
                     link: 'meetups',
                     name: 'Meetups'
                 },
                 {
                     link: 'offers',
                     name: 'Offers'
+                },
+                {
+                    link: 'about',
+                    name: 'About'
                 }
-            ]
+            ],
+            logoSize: 'small',
+            showWords: true
         };
     }
 
     render() {
         return (
           <div id="top-navbar" className="top-navbar">
-              <div className="logo-block">
-                  <img src="/img/logo-full.png" className="full-logo" />
-              </div>
-
+              <Logo
+                  size={this.state.logoSize}
+                  showWords={this.state.showWords} />
               <TopMenu menuItems={this.state.menuItems} />
           </div>
         );

@@ -1,28 +1,21 @@
 #top-navbar {
   position: relative;
-  background: url('/img/rain.png') @dark-navy;
-  background-repeat: no-repeat;
-  background-position-x: right;
-  background-size: cover;
+  background: @minor-bg;
   border-radius: 0px;
   font-family: Adam;
   overflow: hidden;
 
   .top-menu {
-    position: absolute;
-    top: 10%;
-    right: 7%;
-
     ul {
       margin: 0;
       padding: 0;
+      margin-top: 10px;
       li {
         font-size: 18px;
         display: inline;
-        color: @daffodil;
+        color: @labels;
         margin: 1px;
         padding: 10px 20px;
-        background-color: rgba(0,0,0,0.5);
 
         a {
           text-decoration: none;
@@ -30,19 +23,41 @@
         }
 
         &:hover {
-          color: @tangerine;
-          background-color: rgba(0,0,0,0.6);
+          color: @helper-labels;
+          cursor: pointer;
         }
       }
     }
   }
 
   .logo-block {
-    img.full-logo {
-      height: 150px;
+    display: inline-block;
+
+    &.big {
+      img {
+        height: 150px;
+      }
+
+      div.logo-text {
+        font-size: 38px;
+      }
+    }
+
+    &.small {
+      img {
+        height: 50px;
+      }
+
+      div.logo-text {
+        font-size: 12px;
+      }
+    }
+
+    div.logo-text {
+      color: @labels;
+      display: inline-block;
+      top: -1px;
       position: absolute;
-      top: 28%;
-      left: 7%;
     }
   }
 }

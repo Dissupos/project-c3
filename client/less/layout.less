@@ -7,7 +7,7 @@
 }
 
 #top-navbar {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -15,8 +15,10 @@
 }
 
 #content {
-  position: static;
-  width: 100%;
-  height: auto;
-  margin-top: @navbar-height;
+  position: absolute;
+  top: @navbar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
