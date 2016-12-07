@@ -13,7 +13,7 @@ module.exports = {
         './client/index.jsx'
     ],
     output: {
-        path: __dirname + '/src/main/java/webapp',
+        path: __dirname + '/src/main/webapp',
         filename: "bundle.js"
     },
     module: {

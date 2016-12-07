@@ -1,0 +1,36 @@
+spring:
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false
+
+
+server:
+    port: 8080
+
+endpoints:
+   info:
+     sensitive: false
+     enabled: true
+   actuator:
+      enabled: false
+   autoconfig:
+     enabled: false
+   beans:
+     enabled: false
+   configprops:
+     enabled: false
+   dump:
+     enabled: false
+   env:
+     enabled: false
+
+
+info:
+  app:
+    name: Project - C3
+    description: Server for project-c3
+    version: 0.0.1
+
+

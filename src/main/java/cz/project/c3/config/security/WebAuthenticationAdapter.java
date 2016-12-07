@@ -16,13 +16,13 @@ public class WebAuthenticationAdapter extends GlobalAuthenticationConfigurerAdap
     public void init(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(getUserDetailService()).passwordEncoder(new BCryptPasswordEncoder());
     }
-    
+
     @Bean
     UserDetailsService getUserDetailService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return new org.springframework.security.core.userdetails.User(username, "password",
+                return new org.springframework.security.core.userdetails.User(username, "admin",
                         AuthorityUtils.NO_AUTHORITIES);
             }
         };
