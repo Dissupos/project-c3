@@ -9,10 +9,28 @@
   &.auth {
     background: @minor-bg;
 
-    #logo-component {
+    .form-container {
       position: absolute;
       top: 15%;
       left: 38%;
+
+      #logo-component {
+        margin-bottom: 40px;
+      }
+
+      form {
+        width: 300px;
+        margin-left: 20px;
+
+        label {
+          color: white;
+        }
+
+        input {
+          border-radius: 0;
+          border-color: white;
+        }
+      }
     }
   }
 }
