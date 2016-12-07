@@ -27,13 +27,9 @@ public class ProjectC3Application {
      */
     @Bean
     CommandLineRunner init() {
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... args) throws Exception {
-                log.debug("Start init application");
-                // TODO
-            }
-
+        return (String... args) -> {
+            log.debug("Start init application");
+            // TODO
         };
 
     }
