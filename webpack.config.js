@@ -13,8 +13,9 @@ module.exports = {
         './client/index.jsx'
     ],
     output: {
-        path: __dirname + '/src/main/java/webapp',
-        filename: "bundle.js"
+        path: __dirname + '/src/main/webapp',
+        filename: "bundle.js",
+        sourceMapFilename: "bundle.map"
     },
     module: {
         preLoaders: [
@@ -32,21 +33,22 @@ module.exports = {
                 test: /\.less/,
                 loader: 'style-loader!css-loader!less-loader'
             }, {
-                test: /\.(png|jpg|gif)$/,
-                loader: 'url-loader?limit=10000'
+                test: /\.(png|jpe?g|gif)$/i,
+                loaders: 'file-loader',
+                include: '/client/img/'
             }, {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
             }, {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&minetype=application/font-woff"
+                loader: "url-loader?limit=10000&minetype=application/font-woff&name=/fonts/[name].[ext]"
             }, {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "file-loader"
             }, {
                 test: /\.[ot]tf$/,
-                loader: 'url?limit=65000&mimetype=application/octet-stream&name=public/fonts/[name].[ext]'
+                loader: 'url?limit=65000&mimetype=application/octet-stream&name=/fonts/[name].[ext]'
             }
         ],
     },
