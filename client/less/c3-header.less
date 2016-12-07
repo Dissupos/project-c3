@@ -1,0 +1,48 @@
+#top-navbar {
+  position: relative;
+  background: url('/img/rain.png') @dark-navy;
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-size: cover;
+  border-radius: 0px;
+  font-family: Adam;
+  overflow: hidden;
+
+  .top-menu {
+    position: absolute;
+    top: 10%;
+    right: 7%;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        font-size: 18px;
+        display: inline;
+        color: @daffodil;
+        margin: 1px;
+        padding: 10px 20px;
+        background-color: rgba(0,0,0,0.5);
+
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        &:hover {
+          color: @tangerine;
+          background-color: rgba(0,0,0,0.6);
+        }
+      }
+    }
+  }
+
+  .logo-block {
+    img.full-logo {
+      height: 150px;
+      position: absolute;
+      top: 28%;
+      left: 7%;
+    }
+  }
+}
