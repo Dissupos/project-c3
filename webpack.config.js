@@ -44,7 +44,7 @@ module.exports = {
                 loader: "url-loader?limit=10000&minetype=application/font-woff&name=/fonts/[name].[ext]"
             }, {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file-loader"
+                loader: "file-loader?name=/fonts/[name].[ext]"
             }, {
                 test: /\.[ot]tf$/,
                 loader: 'url?limit=65000&mimetype=application/octet-stream&name=/fonts/[name].[ext]'
