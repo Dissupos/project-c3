@@ -1,6 +1,6 @@
 import React from 'react';
 
-import C3Header from './C3Header/C3Header.jsx';
+import C3Header from './navbar/C3Header.jsx';
 
 import '../../node_modules/bootstrap/less/bootstrap.less';
 import '../less/project-c3.less';

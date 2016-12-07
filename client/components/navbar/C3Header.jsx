@@ -7,22 +7,8 @@ export default class C3Header extends React.Component {
         super();
 
         this.state = {
-            menuItems: [
-                {
-                    link: 'meetups',
-                    name: 'Meetups'
-                },
-                {
-                    link: 'offers',
-                    name: 'Offers'
-                },
-                {
-                    link: 'about',
-                    name: 'About'
-                }
-            ],
             logoSize: 'small',
-            showWords: true
+            showWords: false
         };
     }
 
@@ -32,7 +18,7 @@ export default class C3Header extends React.Component {
               <Logo
                   size={this.state.logoSize}
                   showWords={this.state.showWords} />
-              <TopMenu menuItems={this.state.menuItems} />
+              <TopMenu />
           </div>
         );
     }

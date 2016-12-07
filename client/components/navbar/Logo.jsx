@@ -15,7 +15,7 @@ export default class Logo extends React.Component {
         let classes = this.props.size === 'small' ? 'small' : 'big';
 
         return (
-            <div className={`logo-block ${classes}`}>
+            <div id="logo-component" className={`logo-block ${classes}`}>
                 <img src="/img/logo.png" className="full-logo" />
                 {this.props.showWords ? (
                     <div className="logo-text">
