@@ -2,12 +2,10 @@ package cz.project.c3.config.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,18 +33,11 @@ import java.util.Map;
 public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("ADMIN");
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 		.antMatchers("/api/**").authenticated()
-                .antMatchers("/health", "/info", "/metrics", "/mappings", "/trace").hasRole("ADMIN")
+                .antMatchers("/health", "/info", "/metrics", "/mappings", "/trace").hasRole("PERM_STATISTICS")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

@@ -1,24 +1,15 @@
 package cz.project.c3.domain.user;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
+import cz.project.c3.domain.base.BaseObject;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cz.project.c3.domain.base.BaseObject;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * User domain
- * 
+ *
  * @author dic
  * @version 0.0.1
  */
@@ -36,7 +27,7 @@ public class User extends BaseObject implements UserDetails {
     /**
      * @since 0.0.1
      */
-    @Column(name = "password", length = 50, nullable = false)
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
     /**
      * @since 0.0.1
@@ -47,24 +38,45 @@ public class User extends BaseObject implements UserDetails {
     /**
      * @since 0.0.1
      */
-    @ManyToMany
-    @JoinTable(name = "users_roles", 
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
+
+    @Column(name = "account_non_expired")
+    private boolean accountNonExpired = true;
+
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked = true;
+
+    @Column(name = "credentials_non_expired")
+    private boolean credentialsNonExpired = true;
+
+    @Column(name = "enabled")
+    private boolean enabled = true;
+
+    @Transient
+    private List<? extends GrantedAuthority> authorities;
 
     // ============= Constructors ==============================================
     public User() {
         super();
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, String email) {
         super();
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     // ============= Getter/Setters ============================================
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     /**
      * @return the {@link #email}}
      */
@@ -93,10 +105,34 @@ public class User extends BaseObject implements UserDetails {
         this.password = password;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setAuthorities(List<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
     // ============= Override, Implements ======================================
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList("ADMIN,USER");
+    public List<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     @Override
@@ -111,22 +147,22 @@ public class User extends BaseObject implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
     // ============= Methods ===================================================
 

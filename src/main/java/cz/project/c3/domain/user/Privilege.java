@@ -1,17 +1,16 @@
 package cz.project.c3.domain.user;
 
-import java.util.List;
+import cz.project.c3.domain.base.BaseObject;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import cz.project.c3.domain.base.BaseObject;
+import java.util.List;
 
 /**
  * Privilege domain
- * 
+ *
  * @author dis
  * @version 0.0.1
  */
@@ -22,7 +21,7 @@ public class Privilege extends BaseObject {
     // ============= Attributes ================================================
     /**
      * Name of privilege
-     * 
+     *
      * @since 0.0.1
      */
     @Column(name = "name", nullable = false, unique = true)
@@ -30,7 +29,7 @@ public class Privilege extends BaseObject {
 
     /**
      * List of roles which have this privilege
-     * 
+     *
      * @since 0.0.1
      */
     @ManyToMany(mappedBy = "privileges")
@@ -39,6 +38,10 @@ public class Privilege extends BaseObject {
     // ============= Constructors ==============================================
     public Privilege() {
         super();
+    }
+
+    public Privilege(String name) {
+        this.name = "ROLE_" + name;
     }
     // ============= Getter/Setters ============================================
 

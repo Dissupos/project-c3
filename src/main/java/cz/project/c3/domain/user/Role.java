@@ -1,16 +1,9 @@
 package cz.project.c3.domain.user;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
 import cz.project.c3.domain.base.BaseObject;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Role domain
@@ -45,7 +38,7 @@ public class Role extends BaseObject {
      * 
      * @since 0.0.1
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "roles_privileges", 
         joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
