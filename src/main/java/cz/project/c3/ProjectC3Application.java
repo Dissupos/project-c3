@@ -7,6 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import cz.project.c3.domain.user.User;
+import cz.project.c3.repository.user.UserRepository;
 
 /**
  * Main class, we start application from here
@@ -26,10 +30,10 @@ public class ProjectC3Application {
      * This method started with application, here we add our users and foo data
      */
     @Bean
-    CommandLineRunner init() {
+    CommandLineRunner init(UserRepository userRepository) {
         return (String... args) -> {
             log.debug("Start init application");
-            // TODO
+            userRepository.save(new User("admin", new BCryptPasswordEncoder().encode("admin")));
         };
 
     }
