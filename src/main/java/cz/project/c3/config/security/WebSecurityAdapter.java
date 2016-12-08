@@ -15,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -36,13 +35,14 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-		.antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .antMatchers("/health", "/info", "/metrics", "/mappings", "/trace").hasRole("STATISTICS")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/api/users/logged_user")
                 .permitAll()
-                .successHandler(loginSuccessHandler())
+                //.successHandler(loginSuccessHandler())
                 .failureHandler(loginFailureHandler())
                 .and()
                 .exceptionHandling()
@@ -58,12 +58,12 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
-    private AuthenticationSuccessHandler loginSuccessHandler() {
-        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
-            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(200, null, "OK"));
-            httpServletResponse.setStatus(200);
-        };
-    }
+    //    private AuthenticationSuccessHandler loginSuccessHandler() {
+    //        return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
+    //            httpServletResponse.getWriter().append(buildErrorAttributesAsJSON(200, null, "OK"));
+    //            httpServletResponse.setStatus(200);
+    //        };
+    //    }
 
     private LogoutSuccessHandler logoutSuccessHandler() {
         return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
