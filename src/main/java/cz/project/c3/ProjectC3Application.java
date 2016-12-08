@@ -38,8 +38,6 @@ public class ProjectC3Application {
     CommandLineRunner init(UserRepository userRepository,
                            RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
         return (String... args) -> {
-
-
             log.debug("//---------------------------------Start init privileges");
             Privilege permStatistics = privilegeRepository.save(new Privilege("PERM_STATISTICS"));
             log.debug("//---------------------------------Start init roles");
