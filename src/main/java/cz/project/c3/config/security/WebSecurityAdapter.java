@@ -37,7 +37,7 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 		.antMatchers("/api/**").authenticated()
-                .antMatchers("/health", "/info", "/metrics", "/mappings", "/trace").hasRole("PERM_STATISTICS")
+                .antMatchers("/health", "/info", "/metrics", "/mappings", "/trace").hasRole("STATISTICS")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

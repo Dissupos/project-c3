@@ -7,24 +7,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 /**
- * /meetups
  */
+@RequestMapping("/api/meetups")
 public class MeetupsResource {
     /**
      * Зарегестрированный
      *
      * @param id
      */
-    @RequestMapping(value = "/meetups/{id}/join", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
     public void inviteMeetup(@PathVariable long id) {
 
     }
 
     /**
-     *
      * @param id
      */
-    @RequestMapping(value = "/meetups", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void createMeetup(@PathVariable long id) {
 
     }
@@ -34,7 +33,7 @@ public class MeetupsResource {
      *
      * @param id
      */
-    @RequestMapping(value = "/meetups/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void editMeetup(@PathVariable long id) {
 
     }
@@ -44,7 +43,7 @@ public class MeetupsResource {
      *
      * @param id
      */
-    @RequestMapping(value = "/offers/{id}/leave", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/leave", method = RequestMethod.GET)
     public void leaveMeetup(@PathVariable long id) {
 
     }
@@ -55,7 +54,7 @@ public class MeetupsResource {
      *
      * @param id
      */
-    @RequestMapping(value = "/offers/{id}/cancel", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/cancel", method = RequestMethod.GET)
     public void cancelMeetup(@PathVariable long id) {
 
     }

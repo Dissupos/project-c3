@@ -39,16 +39,24 @@ public class ProjectC3Application {
                            RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
         return (String... args) -> {
             log.debug("//---------------------------------Start init privileges");
-            Privilege permStatistics = privilegeRepository.save(new Privilege("PERM_STATISTICS"));
+
+            Privilege permStatistics = privilegeRepository.save(new Privilege("STATISTICS"));
+            Privilege permUserRead = privilegeRepository.save(new Privilege("USER_READ"));
+
             log.debug("//---------------------------------Start init roles");
             Role adminRole = new Role("ADMINISTRATOR");
-            adminRole.setPrivileges(Arrays.asList(permStatistics));
+            adminRole.setPrivileges(Arrays.asList(permStatistics, permUserRead));
             roleRepository.save(adminRole);
+
+            Role userRole = new Role("USER");
+            userRole.setPrivileges(Arrays.asList(permUserRead));
+            roleRepository.save(userRole);
             log.debug("//---------------------------------Start init users");
             User admin = new User("admin", new BCryptPasswordEncoder().encode("admin"), "admin@admin.com");
             admin.setRoles(Arrays.asList(adminRole));
             userRepository.save(admin);
             User user = new User("user", new BCryptPasswordEncoder().encode("user"), "user@user.com");
+            user.setRoles(Arrays.asList(userRole));
             userRepository.save(user);
         };
 

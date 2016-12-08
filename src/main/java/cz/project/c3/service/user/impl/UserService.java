@@ -4,6 +4,8 @@ import cz.project.c3.domain.user.User;
 import cz.project.c3.repository.user.UserRepository;
 import cz.project.c3.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,7 +20,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> getByUsername(String username) {
-        return repository.findOneByUsername(username);
+    public Optional<User> getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return repository.findOneByUsername(auth.getName());
     }
 }

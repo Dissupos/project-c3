@@ -11,18 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * /offers
  */
+@RequestMapping("/api/offers")
 public class OffersResource {
 
     /**
      * Только фирма может создать предлолжение
      */
-    @RequestMapping(value = "/offers", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void createOffer() {
 
     }
 
-    @RequestMapping(value = "/offers/{id}", method = RequestMethod.PUT)
-    public void editOffer() {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void editOffer(@PathVariable long id) {
 
     }
 
@@ -31,7 +32,7 @@ public class OffersResource {
      *
      * @param id
      */
-    @RequestMapping(value = "/offers/{id}/join", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
     public void acceptOffer(@PathVariable long id) {
 
     }
@@ -41,7 +42,7 @@ public class OffersResource {
      *
      * @param id
      */
-    @RequestMapping(value = "/offers/{id}/leave", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/leave", method = RequestMethod.GET)
     public void leaveOffer(@PathVariable long id) {
 
     }
@@ -52,7 +53,7 @@ public class OffersResource {
      * @param page
      * @param sort
      */
-    @RequestMapping(value = "/offers", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public void getAllOffers(Pageable page, Sortable sort) {
 
     }
@@ -62,7 +63,7 @@ public class OffersResource {
      *
      * @param id
      */
-    @RequestMapping(value = "/offers/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteOffer(@PathVariable long id) {
 
     }

@@ -10,10 +10,10 @@ import java.util.Optional;
  *
  */
 public interface IUserService {
-    String PERM_USER_READ = "PERM_USER_READ";
 
     @Transactional(readOnly = true)
-    @PreAuthorize("hasRole(" + PERM_USER_READ + ")")
-    Optional<User> getByUsername(String username);
+    @PreAuthorize("hasRole('USER_READ')")
+    Optional<User> getCurrentUser();
+
 
 }

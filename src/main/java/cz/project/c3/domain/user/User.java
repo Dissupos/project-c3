@@ -1,5 +1,6 @@
 package cz.project.c3.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.project.c3.domain.base.BaseObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ public class User extends BaseObject implements UserDetails {
     /**
      * @since 0.0.1
      */
+    @JsonIgnore
     @Column(name = "password", length = 100, nullable = false)
     private String password;
     /**
@@ -38,6 +40,7 @@ public class User extends BaseObject implements UserDetails {
     /**
      * @since 0.0.1
      */
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -56,6 +59,7 @@ public class User extends BaseObject implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled = true;
 
+    @JsonIgnore
     @Transient
     private List<? extends GrantedAuthority> authorities;
 
