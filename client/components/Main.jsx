@@ -1,4 +1,5 @@
 import React from 'react';
+import { NotificationStack } from 'react-notification';
 
 import C3Header from './navbar/C3Header.jsx';
 

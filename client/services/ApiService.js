@@ -26,7 +26,7 @@ const request = (method, url, data = {}, headers = {}) => {
             reject(reason);
         };
 
-        if (headers['Content-type']) {
+        if (headers['Content-Type']) {
             options.contentType = headers['Content-type'];
         } else if (method === 'POST') {
             options.contentType = 'application/json';
@@ -35,31 +35,7 @@ const request = (method, url, data = {}, headers = {}) => {
         $.ajax(options);
     });
 };
-/**
- * /login POST
- * /logout GET
- * /info /metrics /health /mappings /trace GET
- *
- * /api/logged_user GET
- * /api/register POST
- * /api/users/:id PUT (update account)
- * /api/users/:id DELETE (delete account)
- *
- * /api/offers? GET
- * /api/meetups? GET
- *
- * /api/offers POST
- * /api/offers/:offerId PUT
- * /api/offers/:offerId/join GET
- * /api/offers/:offerId/leave GET
- * /api/offers/:offerId DELETE
- *
- * /api/meetups POST
- * /api/meetups/:meetupId/join GET
- * /api/meetups/:meetupId/leave GET
- * /api/meetups/:meetupId/cancel GET
- * /api/meetups/:meetupId PUT
- */
+
 const apiService = {
     /**
      * Login to the application.

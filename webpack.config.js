@@ -12,6 +12,8 @@ module.exports = {
     entry: [
         './client/index.jsx'
     ],
+    devtool: 'source-map',
+    debug: true,
     output: {
         path: __dirname + '/src/main/webapp',
         filename: "bundle.js",

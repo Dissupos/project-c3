@@ -12,10 +12,10 @@ export default class TopMenu extends React.Component {
             <div className="top-menu pull-right">
                 <ul>
                     <li className="top-menu-item">
-                        <Link to="auth">Sign in</Link>
+                        <Link to="auth/sign-in">Sign in</Link>
                     </li>
                     <li className="top-menu-item">
-                        <Link to="auth">Sign up</Link>
+                        <Link to="auth/sign-up">Sign up</Link>
                     </li>
                     <li className="top-menu-item">
                         <Link to="/meetups">Meetups</Link>

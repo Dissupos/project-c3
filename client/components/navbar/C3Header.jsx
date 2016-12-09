@@ -3,8 +3,9 @@ import TopMenu from './TopMenu.jsx';
 import Logo from './Logo.jsx';
 
 export default class C3Header extends React.Component {
-    constructor() {
-        super();
+
+    constructor(props) {
+        super(props);
 
         this.state = {
             logoSize: 'small',
