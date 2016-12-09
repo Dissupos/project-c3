@@ -49,7 +49,7 @@ public class UserService implements IUserService {
     @Override
     public User register(UserRegisterDTO dto) {
         if (isUsernameExists(dto.getUsername()) || isEmailExists(dto.getEmail())) {
-            throw new UserAlreadyExistException("There is an account with that email adress: " + dto.getEmail());
+            throw new UserAlreadyExistException("There is an account with that email adress or login already exists!");
         }
 
         Address address = new Address(dto.getCountry(), dto.getCity());
