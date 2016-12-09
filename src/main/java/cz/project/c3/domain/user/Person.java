@@ -1,15 +1,8 @@
 package cz.project.c3.domain.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import cz.project.c3.domain.base.BaseObject;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "person")
@@ -21,7 +14,7 @@ public class Person extends BaseObject {
     @Column(name = "sex", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private SexType sex;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 

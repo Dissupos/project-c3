@@ -55,9 +55,13 @@ public class UserResource {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateUser(@PathVariable long id, UserDTO dto) {
-        return ResponseEntity.ok().build();
+    @RequestMapping(value = "/update_user", method = RequestMethod.PUT)
+    public ResponseEntity<User> updateUser(@PathVariable long id, UserDTO dto) {
+        User user = userService.updateUser(dto);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
 
     /**
@@ -66,7 +70,7 @@ public class UserResource {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete user", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         return ResponseEntity.ok().build();
     }

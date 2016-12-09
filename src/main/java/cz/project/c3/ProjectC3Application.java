@@ -39,22 +39,23 @@ public class ProjectC3Application {
 
             Privilege permStatistics = privilegeRepository.save(new Privilege("STATISTICS"));
             Privilege permUserRead = privilegeRepository.save(new Privilege("USER_READ"));
+            Privilege permUserWrite = privilegeRepository.save(new Privilege("USER_WRITE"));
 
             log.debug("//---------------------------------Start init roles");
             Role adminRole = new Role("ADMINISTRATOR");
-            adminRole.setPrivileges(Arrays.asList(permStatistics, permUserRead));
+            adminRole.setPrivileges(Arrays.asList(permStatistics, permUserRead, permUserWrite));
             roleRepository.save(adminRole);
 
             Role userRole = new Role("STUDENT");
-            userRole.setPrivileges(Arrays.asList(permUserRead));
+            userRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite));
             roleRepository.save(userRole);
 
             Role companyRole = new Role("COMPANY");
-            companyRole.setPrivileges(Arrays.asList(permUserRead));
+            companyRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite));
             roleRepository.save(companyRole);
-            
+
             Role professorRole = new Role("PROFESSOR");
-            professorRole.setPrivileges(Arrays.asList(permUserRead));
+            professorRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite));
             roleRepository.save(professorRole);
             log.debug("//---------------------------------Start init users");
             Person adminPerson = personRepository.save(new Person("Test_name", "Test_lastname", SexType.MALE,
