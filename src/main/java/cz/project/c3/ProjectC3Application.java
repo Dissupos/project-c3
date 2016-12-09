@@ -1,11 +1,7 @@
 package cz.project.c3;
 
-import cz.project.c3.domain.user.Privilege;
-import cz.project.c3.domain.user.Role;
-import cz.project.c3.domain.user.User;
-import cz.project.c3.repository.user.PrivilegeRepository;
-import cz.project.c3.repository.user.RoleRepository;
-import cz.project.c3.repository.user.UserRepository;
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,7 +11,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Arrays;
+import cz.project.c3.domain.user.AccountType;
+import cz.project.c3.domain.user.Address;
+import cz.project.c3.domain.user.Person;
+import cz.project.c3.domain.user.Privilege;
+import cz.project.c3.domain.user.Role;
+import cz.project.c3.domain.user.SexType;
+import cz.project.c3.domain.user.User;
+import cz.project.c3.repository.user.AddressRepository;
+import cz.project.c3.repository.user.PersonRepository;
+import cz.project.c3.repository.user.PrivilegeRepository;
+import cz.project.c3.repository.user.RoleRepository;
+import cz.project.c3.repository.user.UserRepository;
 
 /**
  * Main class, we start application from here
@@ -35,8 +42,9 @@ public class ProjectC3Application {
      * This method started with application, here we add our users and foo data
      */
     @Bean
-    CommandLineRunner init(UserRepository userRepository,
-                           RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
+    CommandLineRunner init(UserRepository userRepository, RoleRepository roleRepository,
+            PrivilegeRepository privilegeRepository, PersonRepository personRepository,
+            AddressRepository addressRepository) {
         return (String... args) -> {
             log.debug("//---------------------------------Start init privileges");
 
@@ -48,14 +56,20 @@ public class ProjectC3Application {
             adminRole.setPrivileges(Arrays.asList(permStatistics, permUserRead));
             roleRepository.save(adminRole);
 
-            Role userRole = new Role("USER");
+            Role userRole = new Role("STUDENT");
             userRole.setPrivileges(Arrays.asList(permUserRead));
             roleRepository.save(userRole);
             log.debug("//---------------------------------Start init users");
-            User admin = new User("admin", new BCryptPasswordEncoder().encode("admin"), "admin@admin.com");
+            Person adminPerson = personRepository.save(new Person("Test_name", "Test_lastname", SexType.MALE,
+                    addressRepository.save(new Address("Czech Republic", "Brno"))));
+            User admin = new User("admin", new BCryptPasswordEncoder().encode("admin"), AccountType.ADMINISTRATOR,
+                    "admin@admin.com", adminPerson);
             admin.setRoles(Arrays.asList(adminRole));
             userRepository.save(admin);
-            User user = new User("user", new BCryptPasswordEncoder().encode("user"), "user@user.com");
+            Person userPerson = personRepository.save(new Person("user-name", "user-lastname", SexType.FEMALE,
+                    addressRepository.save(new Address("Czech Republic", "Praha"))));
+            User user = new User("user", new BCryptPasswordEncoder().encode("user"), AccountType.STUDENT,
+                    "user@user.com", userPerson);
             user.setRoles(Arrays.asList(userRole));
             userRepository.save(user);
         };

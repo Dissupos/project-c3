@@ -1,16 +1,22 @@
 package cz.project.c3.resource;
 
-import cz.project.c3.domain.user.User;
-import cz.project.c3.service.user.IUserService;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import cz.project.c3.domain.dto.UserDTO;
+import cz.project.c3.domain.dto.UserRegisterDTO;
+import cz.project.c3.domain.user.User;
+import cz.project.c3.service.user.IUserService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,11 +29,9 @@ public class UserResource {
         this.userService = userService;
     }
 
-    //имя фамилия адресс -> страна город
+    // имя фамилия адресс -> страна город
 
     /**
-     * Только залогиненные
-     *
      * @return
      */
     @RequestMapping(value = "/logged_user", method = RequestMethod.GET)
@@ -40,13 +44,15 @@ public class UserResource {
     }
 
     /**
-     * Все
-     *
      * @return
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<Void> registerUser() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> registerUser(@Valid @RequestBody UserRegisterDTO dto) {
+        User user = userService.register(dto);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     /**
@@ -56,7 +62,7 @@ public class UserResource {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateUser(@PathVariable long id) {
+    public ResponseEntity<Void> updateUser(@PathVariable long id, UserDTO dto) {
         return ResponseEntity.ok().build();
     }
 

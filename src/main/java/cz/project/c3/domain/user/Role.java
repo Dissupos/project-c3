@@ -1,9 +1,18 @@
 package cz.project.c3.domain.user;
 
-import cz.project.c3.domain.base.BaseObject;
-
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import cz.project.c3.domain.base.BaseObject;
 
 /**
  * Role domain
@@ -38,7 +47,8 @@ public class Role extends BaseObject {
      * 
      * @since 0.0.1
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "roles_privileges", 
         joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))

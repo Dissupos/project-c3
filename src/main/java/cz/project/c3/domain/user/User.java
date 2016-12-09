@@ -1,18 +1,31 @@
 package cz.project.c3.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import cz.project.c3.domain.base.BaseObject;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import cz.project.c3.domain.base.BaseObject;
 
 /**
  * User domain
  *
- * @author dic
- * @version 0.0.1
+ * @author dis
+ * @version 0.1
  */
 @Table(name = "c3_user")
 @Entity
@@ -20,31 +33,42 @@ public class User extends BaseObject implements UserDetails {
     // ============= Constants =================================================
     // ============= Attributes ================================================
     /**
-     * @since 0.0.1
+     * @since 0.1
      */
     @Column(name = "user_name", length = 30, unique = true, nullable = false, updatable = false)
     private String username;
 
     /**
-     * @since 0.0.1
+     * @since 0.1
      */
     @JsonIgnore
     @Column(name = "password", length = 100, nullable = false)
     private String password;
-    /**
-     * @since 0.0.1
-     */
-    @Column(name = "email", length = 50, nullable = false)
-    private String email;
 
     /**
-     * @since 0.0.1
+     * @since 0.1
+     */
+    @Column(name = "user_type", nullable = false, length = 10)
+    private AccountType type;
+    /**
+     * @since 0.1
+     */
+    @Column(name = "email", length = 255, nullable = false, unique = true)
+    private String email;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private Person person;
+
+    /**
+     * @since 0.1
      */
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @ManyToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "users_roles", 
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
     @Column(name = "account_non_expired")
@@ -68,17 +92,47 @@ public class User extends BaseObject implements UserDetails {
         super();
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, AccountType type, String email, Person person) {
         super();
         this.username = username;
         this.password = password;
+        this.type = type;
         this.email = email;
+        this.person = person;
     }
 
     // ============= Getter/Setters ============================================
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    /**
+     * @return the type
+     */
+    public AccountType getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the person
+     */
+    public Person getPerson() {
+        return person;
+    }
+
+    /**
+     * @param person the person to set
+     */
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     /**
