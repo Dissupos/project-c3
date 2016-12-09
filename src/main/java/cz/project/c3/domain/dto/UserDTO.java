@@ -1,10 +1,9 @@
 package cz.project.c3.domain.dto;
 
-import javax.validation.constraints.Max;
+import cz.project.c3.domain.user.SexType;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import cz.project.c3.domain.user.SexType;
 
 public class UserDTO {
     // --------------------------- PERSON INFO
@@ -25,6 +24,15 @@ public class UserDTO {
     @Size(min = 1, max = 30)
     private String city;
 
+
+    // --------------------------- UNIVERSITY INFO
+    @Size(min = 1, max = 200)
+    private String universityName;
+
+    // --------------------------- COMPANY NAME
+    @Size(min = 1, max = 200)
+    private String companyName;
+
     public UserDTO() {
         super();
     }
@@ -36,6 +44,22 @@ public class UserDTO {
         this.sex = sex;
         this.country = country;
         this.city = city;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
     }
 
     /**
