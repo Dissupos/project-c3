@@ -2,6 +2,7 @@ package cz.project.c3.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.project.c3.domain.base.BaseObject;
+import cz.project.c3.domain.role.Role;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +45,7 @@ public class User extends BaseObject implements UserDetails {
     /**
      * @since 0.1
      */
-    @Column(name = "email", length = 255, nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
 

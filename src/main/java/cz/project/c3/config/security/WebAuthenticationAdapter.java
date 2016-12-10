@@ -1,10 +1,9 @@
 package cz.project.c3.config.security;
 
-import cz.project.c3.domain.user.Privilege;
-import cz.project.c3.domain.user.Role;
+import cz.project.c3.domain.role.Privilege;
+import cz.project.c3.domain.role.Role;
 import cz.project.c3.domain.user.User;
 import cz.project.c3.repository.user.UserRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

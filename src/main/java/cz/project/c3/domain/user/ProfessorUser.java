@@ -1,5 +1,8 @@
 package cz.project.c3.domain.user;
 
+import cz.project.c3.domain.other.University;
+import cz.project.c3.domain.person.Person;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 

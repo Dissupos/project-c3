@@ -1,7 +1,7 @@
 package cz.project.c3.service.user;
 
-import cz.project.c3.domain.dto.UserDTO;
-import cz.project.c3.domain.dto.UserRegisterDTO;
+import cz.project.c3.web.dto.UserDTO;
+import cz.project.c3.web.dto.UserRegisterDTO;
 import cz.project.c3.domain.user.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;

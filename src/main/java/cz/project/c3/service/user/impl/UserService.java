@@ -1,11 +1,21 @@
 package cz.project.c3.service.user.impl;
 
-import cz.project.c3.domain.dto.UserDTO;
-import cz.project.c3.domain.dto.UserRegisterDTO;
+import cz.project.c3.domain.other.Company;
+import cz.project.c3.domain.other.University;
+import cz.project.c3.domain.person.Address;
+import cz.project.c3.domain.person.Person;
+import cz.project.c3.domain.role.Role;
+import cz.project.c3.service.other.ICompanyService;
+import cz.project.c3.service.other.IUniversityService;
+import cz.project.c3.service.person.IAddressService;
+import cz.project.c3.service.person.IPersonService;
+import cz.project.c3.service.role.IRoleService;
+import cz.project.c3.web.dto.UserDTO;
+import cz.project.c3.web.dto.UserRegisterDTO;
 import cz.project.c3.domain.user.*;
 import cz.project.c3.repository.user.UserRepository;
-import cz.project.c3.resource.base.error.UserAlreadyExistException;
-import cz.project.c3.resource.base.error.UserNotFoundException;
+import cz.project.c3.web.error.UserAlreadyExistException;
+import cz.project.c3.web.error.UserNotFoundException;
 import cz.project.c3.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
