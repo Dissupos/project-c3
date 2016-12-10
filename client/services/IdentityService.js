@@ -1,9 +1,11 @@
 import ApiService from './ApiService.js';
 
 let instance = null;
-let user = null;
+let user = {};
+let subscribers = [];
 
 class IdentityService {
+
     constructor() {
         if (!instance) {
             instance = this;
@@ -13,6 +15,16 @@ class IdentityService {
         this.setUserIdentity = this.setUserIdentity.bind(this);
 
         return instance;
+    }
+
+    subscribe(sub) {
+        subscribers.push(sub);
+    }
+
+    update() {
+        subscribers.forEach((sub) => {
+            sub.update(user);
+        });
     }
 
     /**
@@ -25,7 +37,7 @@ class IdentityService {
         return new Promise((resolve, reject) => {
             if (!user) {
                 ApiService.loggedUser().then((response) => {
-                    user = response.data;
+                    this.setUserIdentity(response);
                     resolve(user);
                 }).catch((reason) => {
                     reject(reason);
@@ -43,6 +55,7 @@ class IdentityService {
      */
     setUserIdentity(identity) {
         user = identity;
+        this.update();
     }
 }
 

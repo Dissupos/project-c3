@@ -79,12 +79,11 @@ const apiService = {
     /**
      * Update user data.
      *
-     * @param {number} id
      * @param {Object} data
      * @returns {Promise}
      */
-    updateUserData(id, data) {
-        return request('PUT', `/api/users/${id}`, data);
+    updateUserData(data) {
+        return request('PUT', `/api/users/update_user`, data);
     },
 
     /**
@@ -107,6 +106,10 @@ const apiService = {
         return request('GET', '/api/offers', params);
     },
 
+    getOffer(id) {
+        return request('GET', `/api/offers/${id}`);
+    },
+
     /**
      * Get meetups.
      *
@@ -115,6 +118,10 @@ const apiService = {
      */
     getMeetups(params) {
         return request('GET', '/api/meetups', params);
+    },
+
+    getMeetup(id) {
+        return request('GET', `/api/meetups/${id}`);
     },
 
     /**
