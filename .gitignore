@@ -1,6 +1,6 @@
 /node_modules/
 /.idea/
-/src/main/webapp/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
