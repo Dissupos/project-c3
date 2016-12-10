@@ -73,7 +73,7 @@ public class OffersResource {
      * @param page
      * @param sort
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<Collection<OfferListDTO>> getAllOffers(Pageable page, Sortable sort) {
         Collection<Offer> offers = service.getAll();
         if (offers.isEmpty()) {

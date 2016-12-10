@@ -1,13 +1,14 @@
 package cz.project.c3.domain.person;
 
+import cz.project.c3.domain.base.BaseObject;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import cz.project.c3.domain.base.BaseObject;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address", uniqueConstraints = {@UniqueConstraint(columnNames = {"country", "city"})})
 public class Address extends BaseObject {
     @Column(name = "country", nullable = false, length = 30)
     private String country;
