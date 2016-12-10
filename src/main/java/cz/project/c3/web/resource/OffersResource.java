@@ -36,7 +36,12 @@ public class OffersResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(offerOptional.get(), HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "/{id}/complete", method = RequestMethod.GET)
+    public ResponseEntity<Void> completeOffer(@PathVariable long id) {
+
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
 
     /**
@@ -97,8 +102,9 @@ public class OffersResource {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteOffer(@PathVariable long id) {
-
+    public ResponseEntity<Void> deleteOffer(@PathVariable long id) {
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
