@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Date;
 
 //title, description, companyId, category, createdAt, status, professorId, studentId, address, completedAt
-// status: new(professr and student non), waiting(only one), started, competed
 @Entity
 @Table(name = "offer")
 public class Offer extends BaseObject {
@@ -23,7 +22,7 @@ public class Offer extends BaseObject {
     @Column(name = "description", nullable = false, length = 2000)
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professor_id")
@@ -32,12 +31,10 @@ public class Offer extends BaseObject {
     @JoinColumn(name = "student_id")
     private StudentUser student;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
     @Column(name = "complete_at")
     private Date completeAt;
-    @Transient
-    private OfferStatus status;
     @Column(name = "category", nullable = false, length = 100)
     private Category category;
 
@@ -123,11 +120,14 @@ public class Offer extends BaseObject {
     }
 
     public OfferStatus getStatus() {
+        if (professor != null && student != null) {
+            return OfferStatus.STARTED;
+        } else if (professor != null || student != null) {
+            return OfferStatus.WAITING;
+        } else if (completeAt != null) {
+            return OfferStatus.COMPLETED;
+        }
         return OfferStatus.NEW;
-    }
-
-    public void setStatus(OfferStatus status) {
-        this.status = status;
     }
 
     public Category getCategory() {

@@ -7,4 +7,7 @@ import cz.project.c3.domain.person.Address;
 public interface IAddressService {
     @Transactional
     Address save(Address address);
+
+    @Transactional
+    Address getOrCreateAddress(String country, String city);
 }

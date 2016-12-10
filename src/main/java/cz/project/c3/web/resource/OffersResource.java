@@ -2,17 +2,16 @@ package cz.project.c3.web.resource;
 
 import cz.project.c3.domain.offer.Offer;
 import cz.project.c3.service.offer.IOfferService;
+import cz.project.c3.web.dto.OfferCreateDTO;
 import cz.project.c3.web.dto.OfferListDTO;
 import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
@@ -38,8 +37,12 @@ public class OffersResource {
      * Только фирма может создать предлолжение
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Void> createOffer() {
-        return null;
+    public ResponseEntity<Offer> createOffer(@Valid @RequestBody OfferCreateDTO dto) {
+        Offer offer = service.createOffer(dto);
+        if (offer == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
