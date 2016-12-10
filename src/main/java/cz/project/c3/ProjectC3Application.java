@@ -57,6 +57,7 @@ public class ProjectC3Application {
             Privilege permStatistics = privilegeRepository.save(new Privilege("STATISTICS"));
             Privilege permUserRead = privilegeRepository.save(new Privilege("USER_READ"));
             Privilege permUserWrite = privilegeRepository.save(new Privilege("USER_WRITE"));
+            Privilege permOfferWrite = privilegeRepository.save(new Privilege("OFFER_EDITOR"));
 
             log.debug("//---------------------------------Start init roles");
             Role adminRole = new Role("ADMINISTRATOR");
@@ -68,7 +69,7 @@ public class ProjectC3Application {
             roleRepository.save(userRole);
 
             Role companyRole = new Role("COMPANY");
-            companyRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite));
+            companyRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferWrite));
             roleRepository.save(companyRole);
 
             Role professorRole = new Role("PROFESSOR");
@@ -97,8 +98,8 @@ public class ProjectC3Application {
             Company company = companyRepository.save(new Company("VUT"));
             User companyUser = new CompanyUser("company", new BCryptPasswordEncoder().encode("company"), AccountType.COMPANY,
                     "company@company.com", companyPerson, company);
-            user.setRoles(Arrays.asList(userRole));
-            userRepository.save(user);
+            companyUser.setRoles(Arrays.asList(companyRole));
+            userRepository.save(companyUser);
             log.debug("//---------------------------------Start init another tables");
             offerRepository.save(new Offer("test", "bla-bla-bla", company, praha, Category.IT));
         };
