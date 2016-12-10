@@ -15,8 +15,7 @@ import cz.project.c3.service.role.IRoleService;
 import cz.project.c3.service.user.IUserService;
 import cz.project.c3.web.dto.UserDTO;
 import cz.project.c3.web.dto.UserRegisterDTO;
-import cz.project.c3.web.error.UserAlreadyExistException;
-import cz.project.c3.web.error.UserNotFoundException;
+import cz.project.c3.web.error.ConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,15 +46,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> getCurrentUser() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return Optional.ofNullable(user);
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @Override
     public User register(UserRegisterDTO dto) {
         if (isUsernameExists(dto.getUsername()) || isEmailExists(dto.getEmail())) {
-            throw new UserAlreadyExistException("There is an account with that email address or login already exists!");
+            throw new ConflictException("There is an account with that email address or login already exists!");
         }
 
         Address address = new Address(dto.getCountry(), dto.getCity());
@@ -91,11 +89,7 @@ public class UserService implements IUserService {
 
     @Override
     public User updateUser(UserDTO dto) {
-        Optional<User> userOptional = getCurrentUser();
-        if (!userOptional.isPresent()) {
-            throw new UserNotFoundException();
-        }
-        PersonalUser user = (PersonalUser) userOptional.get();
+        PersonalUser user = (PersonalUser) getCurrentUser();
         Person person = user.getPerson();
         person.setFirstName(dto.getFirstName());
         person.setLastName(dto.getLastName());

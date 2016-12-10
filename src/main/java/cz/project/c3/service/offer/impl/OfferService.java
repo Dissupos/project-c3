@@ -4,12 +4,13 @@ import cz.project.c3.domain.offer.Offer;
 import cz.project.c3.domain.other.Company;
 import cz.project.c3.domain.person.Address;
 import cz.project.c3.domain.user.CompanyUser;
-import cz.project.c3.domain.user.User;
 import cz.project.c3.repository.offer.OfferRepository;
 import cz.project.c3.service.offer.IOfferService;
 import cz.project.c3.service.person.IAddressService;
 import cz.project.c3.service.user.impl.UserService;
 import cz.project.c3.web.dto.OfferCreateDTO;
+import cz.project.c3.web.error.AccessDeniedException;
+import cz.project.c3.web.error.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +42,29 @@ public class OfferService implements IOfferService {
 
     @Override
     public Offer createOffer(OfferCreateDTO dto) {
-        Optional<User> userOptional = userService.getCurrentUser();
-        if (!userOptional.isPresent()) {
-            return null;
-        }
-        CompanyUser user = (CompanyUser) userOptional.get();
+        CompanyUser user = (CompanyUser) userService.getCurrentUser();
         Company company = user.getCompany();
         Address address = addressService.getOrCreateAddress(dto.getCountry(), dto.getCity());
 
         return save(new Offer(dto.getTitle(), dto.getDescription(), company, address, dto.getCategory()));
+    }
+
+    @Override
+    public Offer updateOffer(Long id, OfferCreateDTO dto) {
+        Optional<Offer> offerOptional = getById(id);
+        CompanyUser user = (CompanyUser) userService.getCurrentUser();
+        if (!offerOptional.isPresent()) {
+            throw new NotFoundException("Offer with id:" + id + ". Not found");
+        }
+        Offer offer = offerOptional.get();
+        if (offer.getCompany().getId() != user.getCompany().getId()) {
+            throw new AccessDeniedException("Its not your offer");
+        }
+        offer.setTitle(dto.getTitle());
+        offer.setDescription(dto.getDescription());
+        offer.setCategory(dto.getCategory());
+        offer.setAddress(addressService.getOrCreateAddress(dto.getCountry(), dto.getCity()));
+        return save(offer);
     }
 
     @Override

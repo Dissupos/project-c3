@@ -20,5 +20,9 @@ public interface IOfferService {
     Offer createOffer(OfferCreateDTO dto);
 
     @Transactional
+    @PreAuthorize("hasRole('OFFER_EDITOR')")
+    Offer updateOffer(Long id, OfferCreateDTO dto);
+
+    @Transactional
     Offer save(Offer offer);
 }

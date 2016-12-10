@@ -52,8 +52,8 @@ public class OffersResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void editOffer(@PathVariable long id) {
-
+    public ResponseEntity<Offer> editOffer(@PathVariable long id, @Valid @RequestBody OfferCreateDTO dto) {
+        return new ResponseEntity<>(service.updateOffer(id, dto), HttpStatus.OK);
     }
 
     /**
