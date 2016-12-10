@@ -35,6 +35,11 @@ public class OfferService implements IOfferService {
     }
 
     @Override
+    public Optional<Offer> getById(Long id) {
+        return Optional.ofNullable(repository.findOne(id));
+    }
+
+    @Override
     public Offer createOffer(OfferCreateDTO dto) {
         Optional<User> userOptional = userService.getCurrentUser();
         if (!userOptional.isPresent()) {

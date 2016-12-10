@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 /**
@@ -29,7 +30,12 @@ public class OffersResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public void getOffer(@PathVariable long id) {
+    public ResponseEntity<Offer> getOffer(@PathVariable long id) {
+        Optional<Offer> offerOptional = service.getById(id);
+        if (!offerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(offerOptional.get(), HttpStatus.OK);
 
     }
 
