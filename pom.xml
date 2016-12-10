@@ -76,7 +76,10 @@
         <profile>
             <id>development</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>dev</value>
+                </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -99,6 +102,13 @@
 
         <profile>
             <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>prod</value>
+                </property>
+            </activation>
             <dependencies>
                 <dependency>
                     <groupId>org.postgresql</groupId>
