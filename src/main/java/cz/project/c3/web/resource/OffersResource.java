@@ -40,8 +40,8 @@ public class OffersResource {
 
     @RequestMapping(value = "/{id}/complete", method = RequestMethod.GET)
     public ResponseEntity<Void> completeOffer(@PathVariable long id) {
-
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+        service.completeOffer(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     /**
