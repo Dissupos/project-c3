@@ -26,7 +26,7 @@ export default class C3Header extends React.Component {
 
     checkRoute() {
         let [,routeName] = (/^#\/([A-Za-z\-_]*)?/).exec(window.location.hash);
-        let isVisible = routeName !== 'sign-up' && routeName !== 'sign-in';
+        let isVisible = routeName !== 'sign-up' && routeName !== 'sign-in' && routeName !== 'about';
 
         this.setState({
             isVisible: isVisible

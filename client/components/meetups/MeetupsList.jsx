@@ -5,6 +5,11 @@ import ApiService from '../../services/ApiService.js';
 import ErrorHandler from '../../services/ErrorHandler.js';
 
 export default class OffersList extends React.Component {
+
+    static propTypes = {
+        queryParams: React.PropTypes.object.isRequired
+    };
+
     constructor() {
         super();
 
@@ -14,7 +19,7 @@ export default class OffersList extends React.Component {
     }
 
     componentDidMount() {
-        ApiService.getMeetups({}).then((response) => {
+        ApiService.getMeetups(this.props.queryParams).then((response) => {
             this.setState({
                 items: response
             });

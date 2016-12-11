@@ -5,6 +5,19 @@ import MeetupsList from './meetups/MeetupsList.jsx';
 export default class Home extends React.Component {
     constructor() {
         super();
+
+        this.state = {
+            offersQuery: {
+                page: 0,
+                size: 3,
+                sort: 'createdDate,desc'
+            },
+            meetupsQuery: {
+                page: 0,
+                size: 3,
+                sort: 'createdDate,desc'
+            }
+        };
     }
 
     render() {
@@ -28,13 +41,13 @@ export default class Home extends React.Component {
                     <div className="col-md-6 col-sm-12">
                         <div className="offers-container">
                             <div className="c3-modal-header">Latest offers</div>
-                            <OffersList />
+                            <OffersList queryParams={this.state.offersQuery} />
                         </div>
                     </div>
                     <div className="col-md-6 col-sm-12">
                         <div className="meetups-container">
                             <div className="c3-modal-header">Nearest meetups</div>
-                            <MeetupsList />
+                            <MeetupsList queryParams={this.state.meetupsQuery} />
                         </div>
                     </div>
                 </div>

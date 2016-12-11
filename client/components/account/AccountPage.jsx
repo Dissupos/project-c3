@@ -26,7 +26,7 @@ export default class AccountPage extends React.Component {
             <div id="content" className="account-page">
                 <div className="account-page-container">
                     <div className="row">
-                        <div className="col-md-6 col-md-offset-3 col-xs-12 col-xs-offset-0">
+                        <div className="col-sm-6 col-sm-offset-3 col-xs-12 col-xs-offset-0">
 
                             <div className="account-page-data">
                                 <div className="c3-modal-header">My account</div>

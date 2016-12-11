@@ -4,6 +4,40 @@
 @import "c3-header.less";
 @import "account.less";
 @import "auth.less";
+@import "details.less";
+
+.status-block {
+  padding: 7px;
+  border-radius: 12px;
+  color: #fff;
+  margin: 0 5px;
+  font-size: 10px;
+
+  &.new-status {
+    background-color: @major-bg;
+  }
+
+  &.waiting-status {
+    background-color: @tangerine;
+  }
+
+  &.started-status {
+    background-color: green;
+  }
+
+  &.overpast-status {
+    background-color: gray;
+    color: #000;
+  }
+
+  &.oncoming-status {
+    background-color: green;
+  }
+
+  &.canceled-status {
+    background-color: red;
+  }
+}
 
 #content {
   padding: 10px;
@@ -38,12 +72,16 @@
     color: @daffodil;
     font-size: 22px;
     font-weight: bold;
+    box-shadow: 0px 2px 5px 0px @minor-bg;
   }
 
   .c3-modal-content {
     padding: 10px;
     margin: 0;
     font-size: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 450px;
   }
 
   .offers-container, .meetups-container, .welcome-container {

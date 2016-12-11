@@ -22,7 +22,7 @@ export default class EntitiesTableRow extends React.Component {
                 <td>{this.props.item.address.city}</td>
                 <td>{this.props.entityType === OFFER ? this.props.item.company.name : this.props.item.meetupDate}</td>
                 <td>
-                    <Link to={`offers/${this.props.item.id}`}>Details</Link>
+                    <Link to={`${this.props.entityType.toLowerCase()}s/${this.props.item.id}`}>Details</Link>
                 </td>
             </tr>
         );
