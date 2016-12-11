@@ -4,6 +4,7 @@ import cz.project.c3.domain.meetup.Meetup;
 import cz.project.c3.repository.meetup.MeetupRepository;
 import cz.project.c3.service.meetup.IMeetupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -27,5 +28,10 @@ public class MeetupServiceImpl implements IMeetupService {
     @Override
     public Collection<Meetup> getAll() {
         return (Collection<Meetup>) repository.findAll();
+    }
+
+    @Override
+    public Collection<Meetup> getAllPagingAndSortng(Pageable pageable) {
+        return repository.findAll(pageable).getContent();
     }
 }

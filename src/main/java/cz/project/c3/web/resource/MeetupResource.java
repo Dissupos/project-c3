@@ -4,7 +4,6 @@ import cz.project.c3.domain.meetup.Meetup;
 import cz.project.c3.service.meetup.IMeetupService;
 import cz.project.c3.web.dto.MeetupListDTO;
 import cz.project.c3.web.error.NotFoundException;
-import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -69,8 +68,8 @@ public class MeetupResource {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Collection<MeetupListDTO>> getAllMeetups(Pageable pageable, Sortable sortable) {
-        Collection<Meetup> meetups = meetupService.getAll();
+    public ResponseEntity<Collection<MeetupListDTO>> getAllMeetups(Pageable pageable) {
+        Collection<Meetup> meetups = meetupService.getAllPagingAndSortng(pageable);
         if (meetups.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
