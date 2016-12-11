@@ -1,6 +1,7 @@
 package cz.project.c3.service.meetup;
 
 import cz.project.c3.domain.meetup.Meetup;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -12,4 +13,7 @@ public interface IMeetupService {
 
     @Transactional(readOnly = true)
     Collection<Meetup> getAll();
+
+    @Transactional(readOnly = true)
+    Collection<Meetup> getAllPagingAndSortng(Pageable pageable);
 }

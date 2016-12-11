@@ -114,6 +114,7 @@ public class ProjectC3Application {
             log.debug("//---------------------------------Start init another tables");
             offerRepository.save(new Offer("test", "bla-bla-bla", company, praha, Category.IT));
             meetupRepository.save(new Meetup("Meetup #1", "Description =)", (PersonalUser) professorUser, praha, new Date(), Category.IT));
+            meetupRepository.save(new Meetup("Meetup #2", "Description =(", (PersonalUser) professorUser, praha, new Date(), Category.IT));
         };
 
     }
