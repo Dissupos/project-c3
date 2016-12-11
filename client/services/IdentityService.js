@@ -1,7 +1,7 @@
 import ApiService from './ApiService.js';
 
 let instance = null;
-let user = {};
+let user = null;
 let subscribers = [];
 
 class IdentityService {
