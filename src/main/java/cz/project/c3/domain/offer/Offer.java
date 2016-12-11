@@ -120,12 +120,12 @@ public class Offer extends BaseObject {
     }
 
     public OfferStatus getStatus() {
-        if (professor != null && student != null) {
+        if (completeAt != null) {
+            return OfferStatus.COMPLETED;
+        } else if (professor != null && student != null) {
             return OfferStatus.STARTED;
         } else if (professor != null || student != null) {
             return OfferStatus.WAITING;
-        } else if (completeAt != null) {
-            return OfferStatus.COMPLETED;
         }
         return OfferStatus.NEW;
     }

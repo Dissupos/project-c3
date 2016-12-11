@@ -1,16 +1,15 @@
 package cz.project.c3.web.resource;
 
-import cz.project.c3.web.dto.UserDTO;
-import cz.project.c3.web.dto.UserRegisterDTO;
 import cz.project.c3.domain.user.User;
 import cz.project.c3.service.user.IUserService;
+import cz.project.c3.web.dto.UserDTO;
+import cz.project.c3.web.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -30,11 +29,7 @@ public class UserResource {
      */
     @RequestMapping(value = "/logged_user", method = RequestMethod.GET)
     public ResponseEntity<User> getCurrentUser() {
-        Optional<User> user = userService.getCurrentUser();
-        if (!user.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getCurrentUser(), HttpStatus.OK);
     }
 
     /**

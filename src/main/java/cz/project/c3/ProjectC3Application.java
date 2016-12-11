@@ -58,6 +58,7 @@ public class ProjectC3Application {
             Privilege permUserRead = privilegeRepository.save(new Privilege("USER_READ"));
             Privilege permUserWrite = privilegeRepository.save(new Privilege("USER_WRITE"));
             Privilege permOfferWrite = privilegeRepository.save(new Privilege("OFFER_EDITOR"));
+            Privilege permOfferUser = privilegeRepository.save(new Privilege("OFFER_USER"));
 
             log.debug("//---------------------------------Start init roles");
             Role adminRole = new Role("ADMINISTRATOR");
@@ -65,7 +66,7 @@ public class ProjectC3Application {
             roleRepository.save(adminRole);
 
             Role userRole = new Role("STUDENT");
-            userRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite));
+            userRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferUser));
             roleRepository.save(userRole);
 
             Role companyRole = new Role("COMPANY");
@@ -73,7 +74,7 @@ public class ProjectC3Application {
             roleRepository.save(companyRole);
 
             Role professorRole = new Role("PROFESSOR");
-            professorRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite));
+            professorRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferUser));
             roleRepository.save(professorRole);
             log.debug("//---------------------------------Start init users");
             // admin
@@ -100,6 +101,13 @@ public class ProjectC3Application {
                     "company@company.com", companyPerson, company);
             companyUser.setRoles(Arrays.asList(companyRole));
             userRepository.save(companyUser);
+            // professor
+            Person professorPerson = personRepository.save(new Person("professor-name", "professor-lastname", SexType.MALE,
+                    praha));
+            User professorUser = new ProfessorUser("professor", new BCryptPasswordEncoder().encode("professor"), AccountType.PROFESSOR,
+                    "professor@professor.com", professorPerson, university);
+            professorUser.setRoles(Arrays.asList(professorRole));
+            userRepository.save(professorUser);
             log.debug("//---------------------------------Start init another tables");
             offerRepository.save(new Offer("test", "bla-bla-bla", company, praha, Category.IT));
         };

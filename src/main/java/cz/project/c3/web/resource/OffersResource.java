@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 /**
@@ -29,8 +30,18 @@ public class OffersResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public void getOffer(@PathVariable long id) {
+    public ResponseEntity<Offer> getOffer(@PathVariable long id) {
+        Optional<Offer> offerOptional = service.getById(id);
+        if (!offerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(offerOptional.get(), HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "/{id}/complete", method = RequestMethod.GET)
+    public ResponseEntity<Void> completeOffer(@PathVariable long id) {
+        service.completeOffer(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     /**
@@ -46,8 +57,8 @@ public class OffersResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void editOffer(@PathVariable long id) {
-
+    public ResponseEntity<Offer> editOffer(@PathVariable long id, @Valid @RequestBody OfferCreateDTO dto) {
+        return new ResponseEntity<>(service.updateOffer(id, dto), HttpStatus.OK);
     }
 
     /**
@@ -56,7 +67,9 @@ public class OffersResource {
      * @param id
      */
     @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
-    public void acceptOffer(@PathVariable long id) {
+    public ResponseEntity<Void> acceptOffer(@PathVariable long id) {
+        service.acceptOffer(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
     }
 
@@ -66,8 +79,9 @@ public class OffersResource {
      * @param id
      */
     @RequestMapping(value = "/{id}/leave", method = RequestMethod.GET)
-    public void leaveOffer(@PathVariable long id) {
-
+    public ResponseEntity<Void> leaveOffer(@PathVariable long id) {
+        service.leaveOffer(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     /**
@@ -91,8 +105,9 @@ public class OffersResource {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteOffer(@PathVariable long id) {
-
+    public ResponseEntity<Void> deleteOffer(@PathVariable long id) {
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
