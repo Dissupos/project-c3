@@ -1,5 +1,6 @@
 package cz.project.c3;
 
+import cz.project.c3.domain.meetup.Meetup;
 import cz.project.c3.domain.offer.Category;
 import cz.project.c3.domain.offer.Offer;
 import cz.project.c3.domain.other.Company;
@@ -10,6 +11,7 @@ import cz.project.c3.domain.person.SexType;
 import cz.project.c3.domain.role.Privilege;
 import cz.project.c3.domain.role.Role;
 import cz.project.c3.domain.user.*;
+import cz.project.c3.repository.meetup.MeetupRepository;
 import cz.project.c3.repository.offer.OfferRepository;
 import cz.project.c3.repository.other.CompanyRepository;
 import cz.project.c3.repository.other.UniversityRepository;
@@ -28,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Main class, we start application from here
@@ -50,7 +53,7 @@ public class ProjectC3Application {
     CommandLineRunner init(UserRepository userRepository, RoleRepository roleRepository,
                            PrivilegeRepository privilegeRepository, PersonRepository personRepository,
                            AddressRepository addressRepository, UniversityRepository universityRepository,
-                           OfferRepository offerRepository, CompanyRepository companyRepository) {
+                           OfferRepository offerRepository, CompanyRepository companyRepository, MeetupRepository meetupRepository) {
         return (String... args) -> {
             log.debug("//---------------------------------Start init privileges");
 
@@ -110,6 +113,7 @@ public class ProjectC3Application {
             userRepository.save(professorUser);
             log.debug("//---------------------------------Start init another tables");
             offerRepository.save(new Offer("test", "bla-bla-bla", company, praha, Category.IT));
+            meetupRepository.save(new Meetup("Meetup #1", "Description =)", (PersonalUser) professorUser, praha, new Date(), Category.IT));
         };
 
     }

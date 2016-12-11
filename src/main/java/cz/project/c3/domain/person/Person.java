@@ -15,7 +15,7 @@ public class Person extends BaseObject {
     @Enumerated(EnumType.STRING)
     private SexType sex;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     public Person() {
