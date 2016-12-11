@@ -63,22 +63,23 @@ public class ProjectC3Application {
             Privilege permOfferWrite = privilegeRepository.save(new Privilege("OFFER_EDITOR"));
             Privilege permOfferUser = privilegeRepository.save(new Privilege("OFFER_USER"));
             Privilege permMeetupEditor = privilegeRepository.save(new Privilege("MEETUP_EDITOR"));
+            Privilege permMeetupUser = privilegeRepository.save(new Privilege("MEETUP_USER"));
 
             log.debug("//---------------------------------Start init roles");
             Role adminRole = new Role("ADMINISTRATOR");
-            adminRole.setPrivileges(Arrays.asList(permStatistics, permUserRead, permUserWrite, permMeetupEditor));
+            adminRole.setPrivileges(Arrays.asList(permStatistics, permUserRead, permUserWrite, permMeetupEditor, permMeetupUser));
             roleRepository.save(adminRole);
 
             Role userRole = new Role("STUDENT");
-            userRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferUser,permMeetupEditor));
+            userRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferUser, permMeetupEditor, permMeetupUser));
             roleRepository.save(userRole);
 
             Role companyRole = new Role("COMPANY");
-            companyRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferWrite, permMeetupEditor));
+            companyRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferWrite, permMeetupEditor, permMeetupUser));
             roleRepository.save(companyRole);
 
             Role professorRole = new Role("PROFESSOR");
-            professorRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferUser, permMeetupEditor));
+            professorRole.setPrivileges(Arrays.asList(permUserRead, permUserWrite, permOfferUser, permMeetupEditor, permMeetupUser));
             roleRepository.save(professorRole);
             log.debug("//---------------------------------Start init users");
             // admin

@@ -29,16 +29,6 @@ public class MeetupResource {
     }
 
     /**
-     * Зарегестрированный
-     *
-     * @param id
-     */
-    @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
-    public void inviteMeetup(@PathVariable long id) {
-
-    }
-
-    /**
      * @param dto
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -81,13 +71,25 @@ public class MeetupResource {
     }
 
     /**
+     * Зарегестрированный
+     *
+     * @param id
+     */
+    @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
+    public ResponseEntity<Void> inviteMeetup(@PathVariable long id) {
+        meetupService.inviteMeetup(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    /**
      * Аналогия выше
      *
      * @param id
      */
     @RequestMapping(value = "/{id}/leave", method = RequestMethod.GET)
-    public void leaveMeetup(@PathVariable long id) {
-
+    public ResponseEntity<Void> leaveMeetup(@PathVariable long id) {
+        meetupService.leaveMeetup(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 
@@ -97,7 +99,15 @@ public class MeetupResource {
      * @param id
      */
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.GET)
-    public void cancelMeetup(@PathVariable long id) {
-
+    public ResponseEntity<Void> cancelMeetup(@PathVariable long id) {
+        meetupService.cancel(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteMeetup(@PathVariable long id) {
+        meetupService.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }

@@ -9,12 +9,15 @@ import cz.project.c3.service.person.IAddressService;
 import cz.project.c3.service.user.IUserService;
 import cz.project.c3.web.dto.MeetupCreateDTO;
 import cz.project.c3.web.error.AccessDeniedException;
+import cz.project.c3.web.error.ConflictException;
 import cz.project.c3.web.error.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,6 +83,55 @@ public class MeetupServiceImpl implements IMeetupService {
         meetup.setAddress(addressService.getOrCreateAddress(dto.getCountry(), dto.getCity()));
         meetup.setMeetupDate(dto.getMeetupDate());
         return repository.save(meetup);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Meetup meetup = checkForAccessAndGet(id);
+        repository.delete(meetup);
+    }
+
+    @Override
+    public void cancel(Long id) {
+        Meetup meetup = checkForAccessAndGet(id);
+        meetup.setCanceled(true);
+        repository.save(meetup);
+
+    }
+
+    @Override
+    public void inviteMeetup(Long id) {
+        Meetup meetup = checkForNullAndGet(id);
+        List<PersonalUser> participants = meetup.getParticipants();
+        if (participants == null) {
+            participants = new ArrayList<>();
+        }
+        PersonalUser currentUser = (PersonalUser) userService.getCurrentUser();
+        if (meetup.getCreator().getId() == currentUser.getId()) {
+            throw new ConflictException("You are a creator of this meetup.");
+        }
+        if (participants.contains(currentUser)) {
+            throw new ConflictException("You already participate to this meetup.");
+        }
+        participants.add(currentUser);
+        meetup.setParticipants(participants);
+        repository.save(meetup);
+    }
+
+    @Override
+    public void leaveMeetup(Long id) {
+        Meetup meetup = checkForNullAndGet(id);
+        List<PersonalUser> participants = meetup.getParticipants();
+        PersonalUser currentUser = (PersonalUser) userService.getCurrentUser();
+        if (meetup.getCreator().getId() == currentUser.getId()) {
+            throw new ConflictException("You are a creator of this meetup.");
+        }
+        if (participants == null || !participants.contains(currentUser)) {
+            throw new ConflictException("You are not participate to this meetup.");
+        }
+        participants.remove(currentUser);
+        meetup.setParticipants(participants);
+        repository.save(meetup);
     }
 
 }

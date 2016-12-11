@@ -26,4 +26,20 @@ public interface IMeetupService {
     @Transactional
     @PreAuthorize("hasRole('MEETUP_EDITOR')")
     Meetup updateMeetup(Long id, MeetupCreateDTO dto);
+
+    @Transactional
+    @PreAuthorize("hasRole('MEETUP_EDITOR')")
+    void delete(Long id);
+
+    @Transactional
+    @PreAuthorize("hasRole('MEETUP_EDITOR')")
+    void cancel(Long id);
+
+    @Transactional
+    @PreAuthorize("hasRole('MEETUP_USER')")
+    void inviteMeetup(Long id);
+
+    @Transactional
+    @PreAuthorize("hasRole('MEETUP_USER')")
+    void leaveMeetup(Long id);
 }

@@ -202,4 +202,25 @@ public class User extends BaseObject implements UserDetails {
     }
     // ============= Methods ===================================================
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!username.equals(user.username)) return false;
+        if (type != user.type) return false;
+        if (getId() != user.getId()) return false;
+        return email.equals(user.email);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + email.hashCode();
+        return result;
+    }
 }
