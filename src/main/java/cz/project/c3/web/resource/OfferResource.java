@@ -4,7 +4,6 @@ import cz.project.c3.domain.offer.Offer;
 import cz.project.c3.service.offer.IOfferService;
 import cz.project.c3.web.dto.OfferCreateDTO;
 import cz.project.c3.web.dto.OfferListDTO;
-import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -88,11 +87,10 @@ public class OfferResource {
      * Получить могут все, даже не залогиненные
      *
      * @param page
-     * @param sort
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Collection<OfferListDTO>> getAllOffers(Pageable page, Sortable sort) {
-        Collection<Offer> offers = service.getAll();
+    public ResponseEntity<Collection<OfferListDTO>> getAllOffers(Pageable page) {
+        Collection<Offer> offers = service.getAllPageableAndSortable(page);
         if (offers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

@@ -14,6 +14,7 @@ import cz.project.c3.web.error.AccessDeniedException;
 import cz.project.c3.web.error.ConflictException;
 import cz.project.c3.web.error.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -35,7 +36,12 @@ public class OfferService implements IOfferService {
 
     @Override
     public Collection<Offer> getAll() {
-        return repository.findAll();
+        return (Collection<Offer>) repository.findAll();
+    }
+
+    @Override
+    public Collection<Offer> getAllPageableAndSortable(Pageable pageable) {
+        return repository.findAll(pageable).getContent();
     }
 
     @Override
