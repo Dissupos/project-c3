@@ -19,7 +19,7 @@ import java.util.List;
 public class Meetup extends BaseObject {
     @Column(name = "title", nullable = false, length = 200)
     private String title;
-    @Column(name = "description", nullable = false, length = 2000)
+    @Column(name = "description", nullable = false, length = 3000)
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
