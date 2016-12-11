@@ -6,11 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**
- * Repository for domain User
- * 
- * @author dis
- */
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     Optional<User> findOneByUsername(String username);

@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-//title, description, creatorId, category, participants, status, meetupDate, address
 @Entity
 @Table(name = "meetup")
 public class Meetup extends BaseObject {

@@ -6,9 +6,6 @@ import cz.project.c3.web.dto.UserRegisterDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- */
 public interface IUserService {
 
     @Transactional(readOnly = true)

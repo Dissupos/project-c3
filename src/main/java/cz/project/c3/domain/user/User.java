@@ -11,47 +11,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * User domain
- *
- * @author dis
- * @version 0.1
- */
 @Entity
 @Table(name = "c3_user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role")
 public class User extends BaseObject implements UserDetails {
-    // ============= Constants =================================================
-    // ============= Attributes ================================================
-    /**
-     * @since 0.1
-     */
     @Column(name = "user_name", length = 30, unique = true, nullable = false, updatable = false)
     private String username;
 
-    /**
-     * @since 0.1
-     */
     @JsonIgnore
     @Column(name = "password", length = 100, nullable = false)
     private String password;
 
-    /**
-     * @since 0.1
-     */
     @Column(name = "user_type", nullable = false, length = 10)
     private AccountType type;
-    /**
-     * @since 0.1
-     */
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-
-    /**
-     * @since 0.1
-     */
     @JsonIgnore
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -80,7 +57,6 @@ public class User extends BaseObject implements UserDetails {
     @Transient
     private List<? extends GrantedAuthority> authorities;
 
-    // ============= Constructors ==============================================
     public User() {
         super();
     }
@@ -93,50 +69,31 @@ public class User extends BaseObject implements UserDetails {
         this.email = email;
     }
 
-    // ============= Getter/Setters ============================================
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    /**
-     * @return the type
-     */
     public AccountType getType() {
         return type;
     }
 
-    /**
-     * @param type the type to set
-     */
     public void setType(AccountType type) {
         this.type = type;
     }
 
-    /**
-     * @return the {@link #email}}
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the {@link #email}} to set
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @param username the {@link #username}} to set
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * @param password the {@link #password}} to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
@@ -165,7 +122,6 @@ public class User extends BaseObject implements UserDetails {
         this.authorities = authorities;
     }
 
-    // ============= Override, Implements ======================================
     @Override
     public List<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -200,7 +156,6 @@ public class User extends BaseObject implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-    // ============= Methods ===================================================
 
     @Override
     public boolean equals(Object o) {

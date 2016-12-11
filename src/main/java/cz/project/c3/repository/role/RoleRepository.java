@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**
- * @author dis
- */
 @Repository
 public interface RoleRepository extends PagingAndSortingRepository<Role, Long> {
     Optional<Role> findOneByName(String name);

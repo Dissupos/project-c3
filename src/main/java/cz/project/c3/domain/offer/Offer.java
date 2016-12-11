@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-//title, description, companyId, category, createdAt, status, professorId, studentId, address, completedAt
 @Entity
 @Table(name = "offer")
 public class Offer extends BaseObject {
