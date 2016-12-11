@@ -3,6 +3,7 @@
 @import "fonts.less";
 @import "c3-header.less";
 @import "account.less";
+@import "auth.less";
 
 #content {
   padding: 10px;
@@ -11,26 +12,20 @@
   &.auth {
     background: @minor-bg;
 
+    &.sign-in .form-container {
+      margin-top: 5%;
+    }
+
     .form-container {
-      position: absolute;
-      top: 15%;
-      left: 35%;
 
       #logo-component {
         margin-bottom: 40px;
       }
 
       form {
-        width: 300px;
-        margin-left: 20px;
 
         label {
           color: white;
-        }
-
-        input {
-          border-radius: 0;
-          border-color: white;
         }
       }
     }
@@ -76,6 +71,10 @@
   .welcome-container {
     width: 95%;
     font-size: 15px;
+  }
+
+  .main-text {
+    padding: 10px;
   }
 
   .offers-container, .meetups-container {

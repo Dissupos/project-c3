@@ -33,26 +33,42 @@ export default class SignIn extends React.Component {
 
     render() {
         return (
-            <div id="content" className="auth">
+            <div id="content" className="auth sign-in">
                 <div className="form-container">
-                    <Logo
-                        size="big"
-                        showWords={true} />
+                    <div className="row">
+                        <div className="col-sm-4 col-sm-offset-4 col-xs-offset-3">
+                            <Logo
+                                size="big"
+                                showWords={true} />
+                        </div>
+                    </div>
 
                     <form role="form" onSubmit={this.handleSubmit}>
-                        <div className="form-group">
-                            <label>Login:</label>
-                            <input id="login-input" type="text" ref="username" className="form-control"/>
+                        <div className="row">
+                            <div className="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+                                <div className="form-group">
+                                    <label>Login:</label>
+                                    <input id="login-input" type="text" ref="username" className="form-control" required/>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="form-group">
-                            <label>Password:</label>
-                            <input id="password-input" type="password" ref="password" className="form-control"/>
+                        <div className="row">
+                            <div className="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+                                <div className="form-group">
+                                    <label>Password:</label>
+                                    <input id="password-input" type="password" ref="password" className="form-control" required/>
+                                </div>
+                            </div>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">
-                            Sign in
-                        </button>
+                        <div className="row">
+                            <div className="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+                                <button type="submit" className="btn btn-primary">
+                                    Sign in
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

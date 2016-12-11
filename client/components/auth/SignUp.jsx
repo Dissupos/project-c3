@@ -20,7 +20,15 @@ export default class SignUp extends React.Component {
     constructor() {
         super();
 
+        this.userRole = null;
+
+        this.handleRoleChange = this.handleRoleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleRoleChange(e) {
+        this.userRole = e.target.value;
+        this.forceUpdate();
     }
 
     handleSubmit(e) {
@@ -37,69 +45,150 @@ export default class SignUp extends React.Component {
             accountType: this.refs.accountType.value
         };
 
-        /*
+
         if (data.accountType === STUDENT || data.accountType === PROFESSOR) {
-            data.universityName = this.refs.universityName.value;
+            data.universityName = this.refs.university.value;
         }
 
         if (data.accountType === COMPANY) {
-            data.companyName = this.refs.companyName.value;
-        }*/
+            data.companyName = this.refs.company.value;
+        }
 
-        ApiService.register(data)
+        ApiService.register(data).then(() => {
+            NotificationService.success({
+                title: 'Registered',
+                message: 'Your account have been successfully registered. Now you can log in.'
+            });
+            this.context.router.push({
+                path: '/sign-in'
+            });
+        }).catch(ErrorHandler);
     }
 
     render() {
         return (
             <div id="content" className="auth sign-up">
                 <div className="form-container">
-                    <Logo
-                        size="small"
-                        showWords={true} />
 
                     <form role="form" onSubmit={this.handleSubmit}>
                         <div className="row">
-                            <div className="col-xs-6">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0 heading">
+                                Personal data
+                                <hr />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0">
                                 <div className="form-group">
-                                    <label>Firstname:</label>
-                                    <input id="login-input" type="text" ref="firstName" className="form-control"/>
+                                    <label htmlFor="firstname-input">Firstname:</label>
+                                    <input id="firstname-input" type="text" ref="firstName" required className="form-control"/>
                                 </div>
+
                                 <div className="form-group">
-                                    <label>Username:</label>
-                                    <input id="login-input" type="text" ref="username" className="form-control"/>
+                                    <label htmlFor="gender-input">Gender</label>
+                                    <select id="gender-input" className="form-control" required defaultValue="" ref="sex">
+                                        <option value="" disabled>Select your gender</option>
+                                        <option value={MALE}>Male</option>
+                                        <option value={FEMALE}>Female</option>
+                                    </select>
                                 </div>
+
                                 <div className="form-group">
-                                    <label>Country:</label>
-                                    <input id="login-input" type="text" ref="country" className="form-control"/>
+                                    <label htmlFor="country-input">Country:</label>
+                                    <input id="country-input" type="text" ref="country" required className="form-control"/>
                                 </div>
+
+                            </div>
+                            <div className="col-md-4 col-md-offset-0 col-sm-5 col-xs-12 col-xs-offset-0">
                                 <div className="form-group">
-                                    <label>Email:</label>
-                                    <input id="login-input" type="text" ref="email" className="form-control"/>
+                                    <label htmlFor="lastname-input">Lastname:</label>
+                                    <input id="lastname-input" type="text" ref="lastName" required className="form-control"/>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="email-input">Email:</label>
+                                    <input id="email-input" type="text" ref="email" required className="form-control"/>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="city-input">City:</label>
+                                    <input id="city-input" type="text" ref="city" required className="form-control"/>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0 heading">
+                                Account data
+                                <hr />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+                                <div className="form-group">
+                                    <label htmlFor="username-input">Username:</label>
+                                    <input id="username-input" type="text" ref="username" required className="form-control"/>
                                 </div>
                             </div>
-                            <div className="col-xs-6">
+                            <div className="col-md-4 col-md-offset-0 col-sm-5 col-sm-offset-0 col-xs-12 col-xs-offset-0">
                                 <div className="form-group">
-                                    <label>Lastname:</label>
-                                    <input id="login-input" type="text" ref="lastName" className="form-control"/>
-                                </div>
-                                <div className="form-group">
-                                    <label>Password:</label>
-                                    <input id="password-input" type="text" ref="password" className="form-control"/>
-                                </div>
-                                <div className="form-group">
-                                    <label>City:</label>
-                                    <input id="login-input" type="text" ref="city" className="form-control"/>
-                                </div>
-                                <div className="form-group">
-                                    <label>Account type:</label>
-                                    <input id="login-input" type="text" ref="account-type" className="form-control"/>
+                                    <label htmlFor="password-input">Password:</label>
+                                    <input id="password-input" type="password" ref="password" required className="form-control"/>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">
-                            Sign up
-                        </button>
+
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0 heading">
+                                Account type
+                                <hr />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+                                <div className="form-group">
+                                    <label htmlFor="account-type-input">Account type:</label>
+                                    <select id="account-type-input" ref="accountType" required defaultValue="" className="form-control" onChange={this.handleRoleChange}>
+                                        <option value="" disabled>Tell us who are you...</option>
+                                        <option value={STUDENT}>Student</option>
+                                        <option value={PROFESSOR}>University professor</option>
+                                        <option value={COMPANY}>Company representative</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {this.userRole === STUDENT || this.userRole === PROFESSOR ? (
+                                <div className="col-md-4 col-md-offset-0 col-sm-5 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+                                    <div className="form-group">
+                                        <label htmlFor="university-input">University:</label>
+                                        <input id="university-input" type="text" required ref="university" className="form-control"/>
+                                    </div>
+                                </div>
+                            ) : null}
+
+                            {this.userRole === COMPANY ? (
+                                <div className="col-md-4 col-md-offset-0 col-sm-5 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+                                    <div className="form-group">
+                                        <label htmlFor="company-input">Company:</label>
+                                        <input id="company-input" type="text" required ref="company" className="form-control"/>
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+                                <button type="submit" className="btn btn-primary">
+                                    Sign up
+                                </button>
+                            </div>
+                        </div>
+
+
                     </form>
                 </div>
             </div>

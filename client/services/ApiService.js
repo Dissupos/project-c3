@@ -30,6 +30,8 @@ const request = (method, url, data = {}, headers = {}) => {
             options.contentType = headers['Content-type'];
         } else if (method === 'POST') {
             options.contentType = 'application/json';
+            options.dataType = 'json';
+            options.data = JSON.stringify(options.data);
         }
 
         $.ajax(options);

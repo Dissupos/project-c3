@@ -8,7 +8,13 @@ export default class Logo extends React.Component {
 
     static propTypes = {
         size: React.PropTypes.string.isRequired,
-        showWords: React.PropTypes.bool
+        showWords: React.PropTypes.bool,
+        isVisible: React.PropTypes.bool
+    };
+
+    static defaultProps = {
+        isVisible: true,
+        showWords: false
     };
 
     constructor() {
@@ -26,7 +32,7 @@ export default class Logo extends React.Component {
     render() {
         let classes = this.props.size === 'small' ? 'small' : 'big';
 
-        return (
+        return this.props.isVisible ? (
             <div id="logo-component" className={`logo-block ${classes}`} onClick={this.handleClick}>
                 <img src="/img/logo.png" className="full-logo" />
                 {this.props.showWords ? (
@@ -36,6 +42,6 @@ export default class Logo extends React.Component {
                         <div>Communicate</div>
                     </div>) : null}
             </div>
-        );
+        ) : null;
     }
 }
