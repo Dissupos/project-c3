@@ -56,9 +56,8 @@ public class MeetupResource {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Meetup> editMeetup(@PathVariable long id) {
-//        return new ResponseEntity<>(meetupService.updateOffer( dto), HttpStatus.OK);
-        return null;
+    public ResponseEntity<Meetup> editMeetup(@PathVariable long id, @Valid @RequestBody MeetupCreateDTO dto) {
+        return new ResponseEntity<>(meetupService.updateMeetup(id, dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
