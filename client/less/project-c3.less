@@ -33,4 +33,37 @@
       }
     }
   }
+
+  .offers-container, .meetups-container, .main-text {
+    text-align: center;
+    margin: 20px auto;
+    background: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 5px 5px 10px;
+    color: @minor-bg;
+
+    h3 {
+      margin: 0;
+      padding: 0;
+    }
+
+    &, table, table tr {
+      color: @minor-bg
+    }
+
+    table {
+      overflow-y: auto;
+    }
+  }
+
+  .main-text {
+    width: 95%;
+    font-size: 15px;
+  }
+
+  .offers-container, .meetups-container {
+    width: 90%;
+    min-height: 300px;
+  }
 }

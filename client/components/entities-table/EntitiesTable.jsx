@@ -23,7 +23,7 @@ export default class EntitiesTable extends React.Component {
             )
         });
 
-        return (
+        let view = this.props.items.length > 0 ? (
             <div className="entities-list-container">
                 <table className="table table-responsive table-striped">
                     <thead>
@@ -38,10 +38,12 @@ export default class EntitiesTable extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {rows}
+                    {rows}
                     </tbody>
                 </table>
             </div>
-        );
+        ) :  <div>{`Sorry, we haven't found any ${this.props.entityType.toLowerCase()}s`}</div>;
+
+        return view;
     }
 }
