@@ -24,29 +24,78 @@ export default class AccountPage extends React.Component {
         let account = this.state.account;
         let view = account ? (
             <div id="content" className="account-page">
-                <div className="account-page-container" style={{color: 'white'}}>\
+                <div className="account-page-container">
                     <div className="row">
-                        <div className="col-md-4 col-md-offset-4 col-xs-12 col-xs-offset-0">
-                            <h2>My account</h2>
+                        <div className="col-md-6 col-md-offset-3 col-xs-12 col-xs-offset-0">
 
-                            <div>Personal data</div>
-                            <div>Firstname: {account.person.firstName}</div>
-                            <div>Lastname: {account.person.lastName}</div>
-                            <div>Gender: {account.person.sex === MALE ? 'Male' : 'Female'}</div>
-                            <div>Address: {`${account.person.country}, ${account.person.city}`}</div>
+                            <div className="account-page-data">
+                                <div className="c3-modal-header">My account</div>
+                                <div className="c3-modal-content">
+                                    <div className="data-block">
+                                        <div className="header">Personal data</div>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Firstname:</strong> {account.person.firstName}</div>
+                                            </div>
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Lastname:</strong> {account.person.lastName}</div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Gender:</strong> {account.person.sex === MALE ? 'Male' : 'Female'}</div>
+                                            </div>
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Address:</strong> {`${account.person.country}, ${account.person.city}`}</div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <div>Account data</div>
-                            <div>Username: {account.username}</div>
-                            <div>Email: {account.email}</div>
-                            <div>Type: {account.type}</div>
-                            <div>Created at: {(new Date(account.createdDate)).toDateString()}</div>
-                            <div>Last modified: {(new Date(account.lastModifiedDate)).toDateString()}</div>
+                                    <div className="data-block">
+                                        <div className="header">Account data</div>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Username:</strong> {account.username}</div>
+                                            </div>
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Email:</strong> {account.email}</div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Created at:</strong> {(new Date(account.createdDate)).toDateString()}</div>
+                                            </div>
+                                            <div className="col-md-6 col-xs-12">
+                                                <div><strong>Last modified:</strong> {(new Date(account.lastModifiedDate)).toDateString()}</div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            {account.type === COMPANY && <div>Company data</div>}
-                            {account.type === COMPANY && <div>Company name: {account.company.name}</div>}
+                                    <div className="data-block">
+                                        <div className="header">Account type</div>
+                                        <hr />
+                                        <div><strong>Type:</strong> {account.type}</div>
+                                    </div>
 
-                            {(account.type === STUDENT || account.type === PROFESSOR) && <div>University data</div>}
-                            {(account.type === STUDENT || account.type === PROFESSOR) && <div>University name: {account.company.name}</div>}
+                                    {account.type === COMPANY ? (
+                                        <div className="data-block">
+                                            <div className="header">Company data</div>
+                                            <hr />
+                                            <div><strong>Company name:</strong> {account.company.name}</div>
+                                        </div>
+                                    ) : null}
+
+                                    {(account.type === STUDENT || account.type === PROFESSOR) ? (
+                                        <div className="data-block">
+                                            <div className="header">Univesity data</div>
+                                            <hr />
+                                            <div><strong>University name:</strong> {account.university.name}</div>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
