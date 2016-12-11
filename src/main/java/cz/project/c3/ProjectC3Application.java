@@ -56,7 +56,9 @@ public class ProjectC3Application {
                            OfferRepository offerRepository, CompanyRepository companyRepository, MeetupRepository meetupRepository) {
         return (String... args) -> {
             log.debug("//---------------------------------Start init privileges");
-
+            if (userRepository.count() > 0) {
+                return;
+            }
             Privilege permStatistics = privilegeRepository.save(new Privilege("STATISTICS"));
             Privilege permUserRead = privilegeRepository.save(new Privilege("USER_READ"));
             Privilege permUserWrite = privilegeRepository.save(new Privilege("USER_WRITE"));
