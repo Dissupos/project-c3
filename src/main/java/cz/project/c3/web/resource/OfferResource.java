@@ -20,12 +20,12 @@ import java.util.Optional;
  * /offers
  */
 @RequestMapping("/api/offers")
-public class OffersResource {
+public class OfferResource {
 
     private final IOfferService service;
 
     @Autowired
-    public OffersResource(IOfferService service) {
+    public OfferResource(IOfferService service) {
         this.service = service;
     }
 
