@@ -2,17 +2,16 @@ package cz.project.c3.web.resource;
 
 import cz.project.c3.domain.meetup.Meetup;
 import cz.project.c3.service.meetup.IMeetupService;
+import cz.project.c3.web.dto.MeetupCreateDTO;
 import cz.project.c3.web.dto.MeetupListDTO;
 import cz.project.c3.web.error.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -40,11 +39,15 @@ public class MeetupResource {
     }
 
     /**
-     * @param id
+     * @param dto
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public void createMeetup(@PathVariable long id) {
-
+    public ResponseEntity<Meetup> createMeetup(@Valid @RequestBody MeetupCreateDTO dto) {
+        Meetup meetup = meetupService.createMeetup(dto);
+        if (meetup == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(meetup, HttpStatus.OK);
     }
 
     /**
@@ -53,8 +56,9 @@ public class MeetupResource {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void editMeetup(@PathVariable long id) {
-
+    public ResponseEntity<Meetup> editMeetup(@PathVariable long id) {
+//        return new ResponseEntity<>(meetupService.updateOffer( dto), HttpStatus.OK);
+        return null;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
