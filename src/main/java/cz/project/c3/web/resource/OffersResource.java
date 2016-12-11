@@ -67,7 +67,9 @@ public class OffersResource {
      * @param id
      */
     @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
-    public void acceptOffer(@PathVariable long id) {
+    public ResponseEntity<Void> acceptOffer(@PathVariable long id) {
+        service.acceptOffer(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
     }
 
@@ -77,8 +79,9 @@ public class OffersResource {
      * @param id
      */
     @RequestMapping(value = "/{id}/leave", method = RequestMethod.GET)
-    public void leaveOffer(@PathVariable long id) {
-
+    public ResponseEntity<Void> leaveOffer(@PathVariable long id) {
+        service.leaveOffer(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     /**

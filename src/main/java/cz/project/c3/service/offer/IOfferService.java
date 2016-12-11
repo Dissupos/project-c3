@@ -33,4 +33,12 @@ public interface IOfferService {
     @Transactional
     @PreAuthorize("hasRole('OFFER_EDITOR')")
     void delete(Long id);
+
+    @Transactional
+    @PreAuthorize("hasRole('OFFER_USER')")
+    void acceptOffer(Long id);
+
+    @Transactional
+    @PreAuthorize("hasRole('OFFER_USER')")
+    void leaveOffer(Long id);
 }

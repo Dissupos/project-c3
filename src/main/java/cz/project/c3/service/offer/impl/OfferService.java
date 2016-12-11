@@ -4,7 +4,7 @@ import cz.project.c3.domain.offer.Offer;
 import cz.project.c3.domain.offer.OfferStatus;
 import cz.project.c3.domain.other.Company;
 import cz.project.c3.domain.person.Address;
-import cz.project.c3.domain.user.CompanyUser;
+import cz.project.c3.domain.user.*;
 import cz.project.c3.repository.offer.OfferRepository;
 import cz.project.c3.service.offer.IOfferService;
 import cz.project.c3.service.person.IAddressService;
@@ -63,16 +63,20 @@ public class OfferService implements IOfferService {
     }
 
     private Offer checkForAccessAndGet(Long id) {
-        Optional<Offer> offerOptional = getById(id);
         CompanyUser user = (CompanyUser) userService.getCurrentUser();
-        if (!offerOptional.isPresent()) {
-            throw new NotFoundException("Offer with id:" + id + ". Not found");
-        }
-        Offer offer = offerOptional.get();
+        Offer offer = checkForNullAndGet(id);
         if (offer.getCompany().getId() != user.getCompany().getId()) {
             throw new AccessDeniedException("Its not your offer");
         }
         return offer;
+    }
+
+    private Offer checkForNullAndGet(Long id) {
+        Optional<Offer> offerOptional = getById(id);
+        if (!offerOptional.isPresent()) {
+            throw new NotFoundException("Offer with id:" + id + ". Not found");
+        }
+        return offerOptional.get();
     }
 
     @Override
@@ -95,5 +99,41 @@ public class OfferService implements IOfferService {
     public void delete(Long id) {
         Offer offer = checkForAccessAndGet(id);
         repository.delete(offer);
+    }
+
+    @Override
+    public void acceptOffer(Long id) {
+        Offer offer = checkForNullAndGet(id);
+        User user = userService.getCurrentUser();
+        if (user.getType() == AccountType.PROFESSOR) {
+            if (offer.getProfessor() != null) {
+                throw new ConflictException("Sorry! This offer already has an assigned professor.");
+            }
+            offer.setProfessor((ProfessorUser) user);
+        } else if (user.getType() == AccountType.STUDENT) {
+            if (offer.getStudent() != null) {
+                throw new ConflictException("Sorry! This offer already has an assigned student.");
+            }
+            offer.setStudent((StudentUser) user);
+        }
+        save(offer);
+    }
+
+    @Override
+    public void leaveOffer(Long id) {
+        Offer offer = checkForNullAndGet(id);
+        User user = userService.getCurrentUser();
+        if (user.getType() == AccountType.PROFESSOR) {
+            if (offer.getProfessor() == null || offer.getProfessor().getId() != user.getId()) {
+                throw new AccessDeniedException("You are not an assigned professor.");
+            }
+            offer.setProfessor(null);
+        } else if (user.getType() == AccountType.STUDENT) {
+            if (offer.getStudent() == null || offer.getStudent().getId() != user.getId()) {
+                throw new AccessDeniedException("You are not an assigned student.");
+            }
+            offer.setStudent(null);
+        }
+        save(offer);
     }
 }
