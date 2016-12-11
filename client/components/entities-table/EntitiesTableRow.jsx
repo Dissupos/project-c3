@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { OFFER, MEETUP } from '../../constants/Constants.js';
 
 export default class EntitiesTableRow extends React.Component {
@@ -20,7 +21,9 @@ export default class EntitiesTableRow extends React.Component {
                 <td>{this.props.item.category}</td>
                 <td>{this.props.item.address.city}</td>
                 <td>{this.props.entityType === OFFER ? this.props.item.company.name : this.props.item.meetupDate}</td>
-                <td>Actions</td>
+                <td>
+                    <Link to={`offers/${this.props.item.id}`}>Details</Link>
+                </td>
             </tr>
         );
     }
