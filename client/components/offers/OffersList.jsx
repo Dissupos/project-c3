@@ -16,14 +16,24 @@ export default class OffersList extends React.Component {
         this.state = {
             items: []
         };
+
+        this.getItems = this.getItems.bind(this);
     }
 
-    componentDidMount() {
-        ApiService.getOffers(this.props.queryParams).then((response) => {
+    componentWillReceiveProps(newProps) {
+        this.getItems(newProps.queryParams);
+    }
+
+    getItems(queryParams) {
+        ApiService.getOffers(queryParams).then((response) => {
             this.setState({
                 items: response
             });
         }).catch(ErrorHandler);
+    }
+
+    componentDidMount() {
+        this.getItems(this.props.queryParams);
     }
 
     render() {

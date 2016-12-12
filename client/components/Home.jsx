@@ -9,12 +9,12 @@ export default class Home extends React.Component {
         this.state = {
             offersQuery: {
                 page: 0,
-                size: 3,
+                size: 5,
                 sort: 'createdDate,desc'
             },
             meetupsQuery: {
                 page: 0,
-                size: 3,
+                size: 5,
                 sort: 'createdDate,desc'
             }
         };
@@ -38,6 +38,8 @@ export default class Home extends React.Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="row">
                     <div className="col-md-6 col-sm-12">
                         <div className="offers-container">
                             <div className="c3-modal-header">Latest offers</div>

@@ -6,6 +6,17 @@
 @import "auth.less";
 @import "details.less";
 
+.entities-list-container {
+  font-size: 11px;
+  thead {
+    tr {
+      th {
+        text-align: center;
+      }
+    }
+  }
+}
+
 .status-block {
   padding: 7px;
   border-radius: 12px;
@@ -73,6 +84,8 @@
     font-size: 22px;
     font-weight: bold;
     box-shadow: 0px 2px 5px 0px @minor-bg;
+    text-transform: capitalize;
+    z-index: 1000;
   }
 
   .c3-modal-content {
@@ -84,7 +97,7 @@
     max-height: 450px;
   }
 
-  .offers-container, .meetups-container, .welcome-container {
+  .offers-container, .meetups-container, .welcome-container, .entites-page-container {
     text-align: center;
     margin: 20px auto;
     background: #fff;
@@ -103,6 +116,32 @@
 
     table {
       overflow-y: auto;
+    }
+  }
+
+  .entites-page-container {
+    position: relative;
+    margin-top: 0;
+
+    .c3-modal-content {
+      margin-left: 25%;
+      min-height: 400px;
+    }
+
+    .c3-modal-sidebar {
+      position: absolute;
+      top: 51px;
+      left: 0;
+      right: 75%;
+      bottom: 0;
+      z-index: 100;
+      background: lighten(@minor-bg, 2%);
+      padding-top: 10px;
+      text-align: left;
+
+      label {
+        color: #fff;
+      }
     }
   }
 
