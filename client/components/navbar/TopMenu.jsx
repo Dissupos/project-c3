@@ -49,9 +49,6 @@ export default class TopMenu extends React.Component {
                     <li className="top-menu-item">
                         <Link to="/offers">Offers</Link>
                     </li>
-                    <li className="top-menu-item">
-                        <Link to="about">About</Link>
-                    </li>
                     {this.state.user ? <li className="top-menu-item">
                         <a href="javascript:void(0)" onClick={this.logout} >Log out</a>
                     </li> : null}

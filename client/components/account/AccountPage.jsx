@@ -47,7 +47,7 @@ export default class AccountPage extends React.Component {
                                                 <div><strong>Gender:</strong> {account.person.sex === MALE ? 'Male' : 'Female'}</div>
                                             </div>
                                             <div className="col-md-6 col-xs-12">
-                                                <div><strong>Address:</strong> {`${account.person.country}, ${account.person.city}`}</div>
+                                                <div><strong>Address:</strong> {`${account.person.address.country}, ${account.person.address.city}`}</div>
                                             </div>
                                         </div>
                                     </div>

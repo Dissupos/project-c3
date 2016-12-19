@@ -2,6 +2,8 @@ import React from 'react';
 import ApiService from '../../services/ApiService.js';
 import ErrorHandler from '../../services/ErrorHandler.js';
 import Status from '../Status.jsx';
+import EntitiesButtons from '../entities-table/EntitiesButtons.jsx';
+import {OFFER} from '../../constants/Constants.js';
 
 export default class OfferDetails extends React.Component {
 
@@ -17,6 +19,7 @@ export default class OfferDetails extends React.Component {
         let id = this.props.params && this.props.params.id;
         if (id) {
             ApiService.getOffer(id).then((response) => {
+				console.log(response);
                 this.setState({
                     offer: response
                 });
@@ -64,12 +67,16 @@ export default class OfferDetails extends React.Component {
                                         <div className="header">Assigned users</div>
                                         <div className="row">
                                             <div className="col-sm-6 col-xs-12">
-                                                <div><strong>Professor:</strong> {offer.professor && (`${offer.professor.firstName} ${offer.professor.lastName}`)}</div>
+                                                <div><strong>Professor:</strong> {offer.professor && (`${offer.professor.person.firstName} ${offer.professor.person.lastName}`)}</div>
                                             </div>
                                             <div className="col-sm-6 col-xs-12">
-                                                <div><strong>Student:</strong> {offer.student && (`${offer.student.firstName} ${offer.student.lastName}`)}</div>
+                                                <div><strong>Student:</strong> {offer.student && (`${offer.student.person.firstName} ${offer.student.person.lastName}`)}</div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div className="data-block">
+                                        <EntitiesButtons entityType={OFFER} entity={offer} />
                                     </div>
 
                                     <div className="data-block">

@@ -2,6 +2,8 @@ import React from 'react';
 import ApiService from '../../services/ApiService';
 import ErrorHandler from '../../services/ErrorHandler';
 import Status from '../Status.jsx';
+import EntitiesButtons from '../entities-table/EntitiesButtons.jsx';
+import {MEETUP} from '../../constants/Constants.js';
 
 export default class MeetupDetails extends React.Component {
 
@@ -17,6 +19,7 @@ export default class MeetupDetails extends React.Component {
         let id = this.props.params && this.props.params.id;
         if (id) {
             ApiService.getMeetup(id).then((response) => {
+                console.log(response);
                 this.setState({
                     meetup: response
                 });
@@ -61,6 +64,10 @@ export default class MeetupDetails extends React.Component {
                                                 <div><strong>Meetup date:</strong> {`${new Date(meetup.meetupDate).toGMTString()}`}</div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div className="data-block">
+                                        <EntitiesButtons entityType={MEETUP} entity={meetup} />
                                     </div>
 
                                     <div className="data-block">

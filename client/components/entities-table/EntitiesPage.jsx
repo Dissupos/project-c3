@@ -1,9 +1,14 @@
 import React from 'react';
 import OffersList from '../offers/OffersList.jsx';
 import MeetupsList from '../meetups/MeetupsList.jsx';
-import {OFFER, MEETUP} from '../../constants/Constants.js';
+import {OFFER, MEETUP, COMPANY} from '../../constants/Constants.js';
+import IdentityService from '../../services/IdentityService.js';
 
 export default class EntitiesPage extends React.Component {
+
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
 
     static propTypes = {
         entityType: React.PropTypes.string.isRequired
@@ -13,6 +18,7 @@ export default class EntitiesPage extends React.Component {
         super();
 
         this.state = {
+            user: null,
             queryParams: {
                 page: 0,
                 size: 5,
@@ -21,7 +27,16 @@ export default class EntitiesPage extends React.Component {
         };
 
         this.handleQueryChange = this.handleQueryChange.bind(this);
+        this.createNew = this.createNew.bind(this);
     }
+
+	componentDidMount() {
+		IdentityService.getUserIdentity().then((identity) => {
+			this.setState({
+				user: identity
+			});
+		});
+	}
 
     handleQueryChange(e) {
         e.preventDefault();
@@ -30,6 +45,12 @@ export default class EntitiesPage extends React.Component {
                 size: this.refs.perPage.value,
                 sort: this.refs.sortedBy.value
             }
+        });
+    }
+
+    createNew() {
+        this.context.router.push({
+            path: `/new-${this.props.entityType.toLowerCase()}`
         });
     }
 
@@ -75,7 +96,8 @@ export default class EntitiesPage extends React.Component {
 
                                             <div className="row">
                                                 <div className="col-xs-10 col-xs-offset-1">
-                                                    <button type="submit" className="btn btn-primary">Sort</button>
+                                                    <button type="submit" className="btn btn-primary" style={{marginRight: 5}}>Sort</button>
+													{ this.state.user && (this.state.user.type === COMPANY) && (<button type="button" className="btn btn-primary" onClick={this.createNew}>Create</button>)}
                                                 </div>
                                             </div>
                                         </form>

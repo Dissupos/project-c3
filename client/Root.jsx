@@ -21,7 +21,6 @@ export default class Root extends React.Component {
                     <IndexRoute component={Home} />
                     <Route path="sign-in" component={SignIn} />
                     <Route path="sign-up" component={SignUp} />
-                    <Route path="about" component={About} />
                     <Route path="meetups" component={MeetupsPage} />
                     <Route path="offers" component={OffersPage} />
                     <Route path="meetups/:id" component={MeetupDetails} />

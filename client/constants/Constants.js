@@ -12,6 +12,8 @@ export const NEW = 'NEW';
 export const WAITING = 'WAITING';
 export const STARTED = 'STARTED';
 export const COMPLETED = 'COMPLETED';
+export const OVERPAST = 'OVERPAST';
+export const CANCELED = 'CANCELED';
 
 export const OFFER = 'OFFER';
 export const MEETUP = 'MEETUP';

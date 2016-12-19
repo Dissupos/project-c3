@@ -1,6 +1,8 @@
 import React from 'react';
 import { OFFER, MEETUP } from '../../constants/Constants.js';
 import EntitiesTableRow from './EntitiesTableRow.jsx';
+import IdentityService from '../../services/IdentityService.js';
+import {COMPANY} from '../../constants/Constants';
 
 export default class EntitiesTable extends React.Component {
 
